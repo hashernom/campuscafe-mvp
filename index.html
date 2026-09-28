@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+body{margin:0;background:oklch(0.93 0.01 60);font-family:'Figtree',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:oklch(0.66 0.19 45)}
+a:hover{color:oklch(0.58 0.19 45)}
+input,select,textarea,button{font-family:inherit}
+@keyframes ccspin{to{transform:rotate(360deg)}}
+div[style*="overflow: auto"]>*,div[style*="overflow:auto"]>*{flex-shrink:0}
+::placeholder{color:oklch(0.62 0.025 50)}
+input:focus,select:focus,textarea:focus{outline:2px solid oklch(0.66 0.19 45 / 0.4)}
+</style>
+</helmet>
+<div style="min-height:900px;width:100%;display:flex;align-items:center;justify-content:center;padding:36px 16px;background:oklch(0.93 0.01 60);box-sizing:border-box">
+<x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+<div style="position:relative;height:100%;width:100%;display:flex;flex-direction:column;background:oklch(0.97 0.014 70);overflow:hidden;color:oklch(0.26 0.04 45)">
+
+<sc-if value="{{isLogin}}" hint-placeholder-val="{{true}}">
+<div data-screen-label="01-login" style="height:100%;display:flex;flex-direction:column;overflow:auto;padding:0 24px">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:40px 0 24px;min-height:100%">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div style="width:60px;height:60px;border-radius:18px;background:oklch(0.66 0.19 45);display:flex;align-items:center;justify-content:center;color:oklch(0.99 0.008 70);font-size:24px;font-weight:800">CC</div>
+      <div style="font-size:23px;font-weight:800;color:oklch(0.26 0.04 45)">CampusCafé</div>
+      <div style="font-size:13px;color:oklch(0.48 0.03 45);text-align:center;line-height:1.4">Mira el stock en tiempo real y pide antes de llegar a la fila.</div>
+    </div>
+
+    <div style="flex-shrink:0;display:flex;background:oklch(0.94 0.015 60);border-radius:14px;padding:4px;gap:4px">
+      <sc-if value="{{loginIsStudent}}" hint-placeholder-val="{{true}}">
+        <button type="button" onClick="{{setRoleStudent}}" style="flex:1;padding:10px;border:none;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45);box-shadow:0 1px 3px oklch(0.3 0.05 40 / 0.14)">Estudiante</button>
+      </sc-if>
+      <sc-if value="{{loginIsCafetero}}" hint-placeholder-val="{{false}}">
+        <button type="button" onClick="{{setRoleStudent}}" style="flex:1;padding:10px;border:none;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;color:oklch(0.48 0.03 45)">Estudiante</button>
+      </sc-if>
+      <sc-if value="{{loginIsCafetero}}" hint-placeholder-val="{{false}}">
+        <button type="button" onClick="{{setRoleCafetero}}" style="flex:1;padding:10px;border:none;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45);box-shadow:0 1px 3px oklch(0.3 0.05 40 / 0.14)">Cafetería</button>
+      </sc-if>
+      <sc-if value="{{loginIsStudent}}" hint-placeholder-val="{{true}}">
+        <button type="button" onClick="{{setRoleCafetero}}" style="flex:1;padding:10px;border:none;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;color:oklch(0.48 0.03 45)">Cafetería</button>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{loginIsStudent}}" hint-placeholder-val="{{true}}">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:12px">
+        <sc-if value="{{isRegister}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Nombre</label><input type="text" value="{{regName}}" onChange="{{onChangeRegName}}" placeholder="Tu nombre" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /></div></sc-if>
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Correo institucional</label>
+          <input type="email" value="{{loginEmail}}" onChange="{{onChangeEmail}}" placeholder="tu.nombre@correo.udes.edu.co" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
+        </div>
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Contraseña</label>
+          <input type="password" value="{{loginPassword}}" onChange="{{onChangePassword}}" placeholder="••••••••" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
+        </div>
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Sede / campus</label>
+          <select value="{{campus}}" onChange="{{onChangeCampus}}" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)">
+            <option value="campus-principal">Campus Principal</option>
+          </select>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{loginIsCafetero}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:12px">
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Usuario de cafetería</label>
+          <input type="text" value="{{cafeteroUser}}" onChange="{{onChangeCafeteroUser}}" placeholder="cafeteria.bloque8" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
+        </div>
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Contraseña</label>
+          <input type="password" value="{{cafeteroPassword}}" onChange="{{onChangeCafeteroPassword}}" placeholder="••••••••" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
+        </div>
+        <div style="padding:10px 12px;border-radius:10px;background:oklch(0.94 0.015 60);font-size:12px;color:oklch(0.48 0.03 45)">Gestionas: <b>Central</b></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{hasLoginError}}" hint-placeholder-val="{{false}}">
+      <div style="font-size:12px;color:oklch(0.5 0.16 25);font-weight:600">{{loginError}}</div>
+    </sc-if>
+
+    <button type="button" onClick="{{handleLogin}}" style="width:100%;padding:15px;border:none;border-radius:14px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px oklch(0.66 0.19 45 / 0.3)">{{authButtonLabel}}</button>
+    <sc-if value="{{loginIsStudent}}" hint-placeholder-val="{{true}}"><button type="button" onClick="{{toggleAuthMode}}" style="border:none;background:transparent;color:oklch(0.66 0.19 45);font-size:13px;font-weight:700;cursor:pointer;padding:0">{{authSwitchLabel}}</button></sc-if>
+    <div style="text-align:center;font-size:11px;color:oklch(0.62 0.025 50)">Prototipo de demostración · CampusCafé MVP</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="02-home" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:18px 20px 14px;display:flex;flex-direction:column;gap:14px;background:oklch(0.97 0.014 70);border-bottom:1px solid oklch(0.89 0.018 60)">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div>
+        <div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">Hola, {{studentName}}</div>
+        <div style="font-size:12.5px;color:oklch(0.48 0.03 45)">{{campusLabel}}</div>
+      </div>
+      <div style="display:flex;gap:8px"><button type="button" onClick="{{goToCart}}" style="position:relative;flex-shrink:0;width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><sc-if value="{{hasCartItems}}" hint-placeholder-val="{{false}}"><span style="position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">{{cartCount}}</span></sc-if></button><button type="button" onClick="{{exitToLogin}}" style="width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.48 0.03 45)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      </button></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:oklch(0.995 0.006 70);border:1.5px solid oklch(0.89 0.018 60);border-radius:14px;padding:11px 14px">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(0.62 0.025 50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" value="{{searchQuery}}" onChange="{{onChangeSearch}}" onFocus="{{goSearch}}" placeholder="¿Dónde hay empanada de pollo?" style="border:none;outline:none;background:transparent;font-size:13.5px;flex:1;color:oklch(0.26 0.04 45)" />
+    </div>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:16px 20px 24px;display:flex;flex-direction:column;gap:14px">
+    <sc-if value="{{hasSearchQuery}}" hint-placeholder-val="{{false}}">
+      <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45)">Resultados para "{{searchQuery}}"</div>
+      <sc-for list="{{searchResults}}" as="item" hint-placeholder-count="2">
+        <div onClick="{{item.onSelect}}" style="flex-shrink:0;display:flex;align-items:center;gap:12px;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:12px 14px;cursor:pointer;box-shadow:0 1px 2px oklch(0.3 0.05 40 / 0.05)">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.name}}</div>
+            <div style="font-size:12px;color:oklch(0.48 0.03 45)">{{item.cafeteriaName}} · {{item.cafeteriaLocation}}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+            <div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">{{item.priceLabel}}</div>
+            <div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{item.badgeBg}};color:{{item.badgeColor}}">{{item.badgeLabel}}</div>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{searchResultsEmpty}}" hint-placeholder-val="{{false}}">
+        <div style="padding:30px 10px;text-align:center;color:oklch(0.62 0.025 50);font-size:13px">No encontramos ese producto en las cafeterías del campus por ahora.</div>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{hasSearchQuery}}" hint-placeholder-val="{{false}}"><div></div></sc-if>
+
+    <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45)">Cafeterías del campus</div>
+    <sc-for list="{{cafeteriaCards}}" as="item" hint-placeholder-count="4">
+      <div onClick="{{item.onSelect}}" style="flex-shrink:0;display:flex;gap:12px;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:16px;padding:12px;cursor:pointer;box-shadow:0 1px 2px oklch(0.3 0.05 40 / 0.05), 0 6px 14px oklch(0.3 0.05 40 / 0.05)">
+        <div style="width:44px;height:44px;border-radius:13px;background:oklch(0.30 0.05 40);color:oklch(0.99 0.008 70);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0">{{item.initials}}</div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+          <div style="flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+            <div style="flex:1;min-width:0;font-size:14.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.name}}</div>
+            <div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{item.openBg}};color:{{item.openColor}};flex-shrink:0">{{item.openLabel}}</div>
+          </div>
+          <div style="flex-shrink:0;display:flex;align-items:flex-start;gap:5px;font-size:12px;line-height:16px;color:oklch(0.48 0.03 45)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <span style="min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{item.location}}</span>
+          </div>
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;font-size:12px;line-height:16px;white-space:nowrap">
+            <span style="color:oklch(0.48 0.03 45)">{{item.distanceLabel}} · {{item.waitLabel}}</span>
+            <span style="display:flex;align-items:center;gap:5px;font-weight:700;color:{{item.queueColor}}"><span style="width:7px;height:7px;border-radius:50%;background:{{item.queueColor}};flex-shrink:0"></span>{{item.queueLabel}}</span>
+          </div>
+          <div style="flex-shrink:0;font-size:10.5px;line-height:14px;color:oklch(0.62 0.025 50)">{{item.freshLabel}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <sc-for list="{{navTabs}}" as="t" hint-placeholder-count="4"><button type="button" onClick="{{t.onSelect}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:{{t.color}};font-weight:{{t.weight}};font-size:11px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.icon}}"/></svg>{{t.label}}</button></sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCafeteriaDetail}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="03-cafeteria" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromCafeteria}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{cdName}}</div>
+      <div style="font-size:11.5px;color:oklch(0.48 0.03 45)">{{cdLocation}} · {{cdQueueLabel}} · {{cdWaitLabel}}</div>
+    </div>
+    <button type="button" onClick="{{goToCart}}" style="position:relative;flex-shrink:0;width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><sc-if value="{{hasCartItems}}" hint-placeholder-val="{{false}}"><span style="position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">{{cartCount}}</span></sc-if></button>
+  </div>
+
+  <div style="flex:1;overflow:auto">
+    <sc-if value="{{cdOpen}}" hint-placeholder-val="{{true}}">
+      <sc-if value="{{cdHasPromo}}" hint-placeholder-val="{{false}}">
+        <div style="margin:14px 16px 0;padding:12px 14px;border-radius:14px;background:oklch(0.30 0.05 40);color:oklch(0.97 0.02 60);font-size:12.5px;line-height:1.4;display:flex;gap:8px;align-items:flex-start">
+          <span style="font-size:14px">✦</span><span>{{cdPromo}}</span>
+        </div>
+      </sc-if>
+      <div style="margin:12px 16px 0;font-size:11px;color:oklch(0.62 0.025 50)">{{cdFreshLabel}}</div>
+
+      <div style="display:flex;gap:8px;padding:14px 16px 4px;overflow-x:auto">
+        <sc-for list="{{categories}}" as="item" hint-placeholder-count="4">
+          <button type="button" onClick="{{item.onSelect}}" style="padding:9px 15px;border-radius:999px;border:1.5px solid {{item.border}};background:{{item.bg}};color:{{item.color}};font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">{{item.name}}</button>
+        </sc-for>
+      </div>
+
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:12px 16px 100px">
+        <sc-for list="{{cdProducts}}" as="item" hint-placeholder-count="3">
+          <div onClick="{{item.onSelect}}" style="flex-shrink:0;display:flex;gap:12px;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:12px;cursor:pointer;opacity:{{item.cardOpacity}}">
+            <div style="width:64px;height:64px;border-radius:12px;background:oklch(0.94 0.03 70);padding:4px;flex-shrink:0"><svg viewBox="0 0 64 64" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"><path d="{{item.artP1}}" fill="{{item.artF1}}"/><path d="{{item.artP2}}" fill="{{item.artF2}}"/><path d="{{item.artP3}}" fill="{{item.artF3}}" stroke="{{item.artS3}}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;justify-content:center">
+              <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.name}}</div>
+              <div style="font-size:11.5px;color:oklch(0.48 0.03 45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{item.desc}}</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:2px">
+                <div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">{{item.priceLabel}}</div>
+                <div style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{item.badgeBg}};color:{{item.badgeColor}}">{{item.badgeLabel}}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{cdProductsEmpty}}" hint-placeholder-val="{{false}}">
+          <div style="padding:30px 10px;text-align:center;color:oklch(0.62 0.025 50);font-size:13px">No hay productos disponibles en esta categoría por ahora.</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{cdClosed}}" hint-placeholder-val="{{false}}">
+      <div style="padding:60px 30px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+        <div style="width:80px;height:80px;border-radius:50%;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;color:oklch(0.55 0.03 50)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Cerrado ahora</div>
+        <div style="font-size:13px;color:oklch(0.48 0.03 45);line-height:1.5">{{cdHoursText}}</div>
+        <div style="font-size:12.5px;color:oklch(0.62 0.025 50)">Vuelve a intentarlo cuando esta cafetería esté abierta.</div>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{showCartBarCD}}" hint-placeholder-val="{{false}}">
+    <button type="button" onClick="{{goToCart}}" style="position:absolute;left:16px;right:16px;bottom:16px;padding:15px 18px;border:none;border-radius:16px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px oklch(0.66 0.19 45 / 0.35);display:flex;align-items:center;justify-content:space-between">
+      <span style="display:flex;align-items:center;gap:8px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+        Ver carrito
+      </span>
+      <span>{{cartBarLabel}}</span>
+    </button>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isProductDetail}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="04-producto" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromProduct}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div style="flex:1;font-size:13px;font-weight:700;color:oklch(0.48 0.03 45)">{{pdCafeteriaName}}</div>
+    <button type="button" onClick="{{goToCart}}" style="position:relative;flex-shrink:0;width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><sc-if value="{{hasCartItems}}" hint-placeholder-val="{{false}}"><span style="position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">{{cartCount}}</span></sc-if></button>
+    <button type="button" onClick="{{pdToggleFav}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.66 0.19 45)"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{pdFavFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.4-7 10-7 10z"/></svg></button>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:18px 20px 110px;display:flex;flex-direction:column;gap:18px">
+    <div style="flex-shrink:0;width:100%;height:170px;border-radius:16px;background:oklch(0.94 0.03 70);padding:14px"><svg viewBox="0 0 64 64" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"><path d="{{artP1}}" fill="{{artF1}}"/><path d="{{artP2}}" fill="{{artF2}}"/><path d="{{artP3}}" fill="{{artF3}}" stroke="{{artS3}}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div>
+      <div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">{{pdName}}</div>
+      <div style="font-size:13px;color:oklch(0.48 0.03 45);margin-top:4px;line-height:1.5">{{pdDesc}}</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
+        <div style="font-size:20px;font-weight:800;color:oklch(0.26 0.04 45)">{{pdTotalLabel}}</div>
+        <div style="font-size:11.5px;font-weight:700;color:oklch(0.42 0.1 80)">{{pdStockLabel}}</div>
+      </div>
+    </div>
+
+    <sc-if value="{{pdHasSize}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Tamaño</div>
+        <div style="display:flex;gap:8px">
+          <sc-for list="{{pdSizeOptions}}" as="item" hint-placeholder-count="3">
+            <button type="button" onClick="{{item.onSelect}}" style="flex:1;padding:10px 6px;border-radius:12px;border:1.5px solid {{item.border}};background:{{item.bg}};color:{{item.color}};font-size:12.5px;font-weight:700;cursor:pointer">{{item.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{pdHasAzucar}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Azúcar</div>
+        <div style="display:flex;gap:8px">
+          <sc-for list="{{pdAzucarOptions}}" as="item" hint-placeholder-count="3">
+            <button type="button" onClick="{{item.onSelect}}" style="flex:1;padding:10px 6px;border-radius:12px;border:1.5px solid {{item.border}};background:{{item.bg}};color:{{item.color}};font-size:12.5px;font-weight:700;cursor:pointer">{{item.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{pdHasAdiciones}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Adiciones</div>
+        <sc-for list="{{pdAdiciones}}" as="item" hint-placeholder-count="2">
+          <label style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-radius:12px;border:1px solid oklch(0.92 0.015 60);background:oklch(0.995 0.006 70);cursor:pointer">
+            <span style="display:flex;align-items:center;gap:10px;font-size:13px;color:oklch(0.26 0.04 45)">
+              <input type="checkbox" checked="{{item.checked}}" onChange="{{item.onToggle}}" style="width:17px;height:17px;accent-color:oklch(0.66 0.19 45)" />
+              {{item.name}}
+            </span>
+            <span style="font-size:12px;color:oklch(0.48 0.03 45)">{{item.priceLabel}}</span>
+          </label>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px">
+      <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Cantidad</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <button type="button" onClick="{{pdDecrease}}" disabled="{{pdDecreaseDisabled}}" style="width:34px;height:34px;border-radius:10px;border:1.5px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);font-size:17px;font-weight:700;color:oklch(0.26 0.04 45);cursor:pointer">–</button>
+        <div style="font-size:15px;font-weight:800;min-width:16px;text-align:center">{{pdQty}}</div>
+        <button type="button" onClick="{{pdIncrease}}" disabled="{{pdIncreaseDisabled}}" style="width:34px;height:34px;border-radius:10px;border:1.5px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);font-size:17px;font-weight:700;color:oklch(0.26 0.04 45);cursor:pointer">+</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" onClick="{{pdAddToCart}}" style="position:absolute;left:16px;right:16px;bottom:16px;padding:15px 18px;border:none;border-radius:16px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px oklch(0.66 0.19 45 / 0.35)">Agregar al carrito · {{pdTotalLabel}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isCart}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="05-carrito" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromCart}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Tu carrito</div>
+  </div>
+
+  <sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 30px;text-align:center">
+      <div style="width:80px;height:80px;border-radius:50%;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;color:oklch(0.55 0.03 50)">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+      </div>
+      <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Tu carrito está vacío</div>
+      <div style="font-size:13px;color:oklch(0.48 0.03 45)">Explora las cafeterías del campus y agrega productos.</div>
+      <button type="button" onClick="{{goHomeFromEmptyCart}}" style="margin-top:6px;padding:12px 22px;border:none;border-radius:12px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:13.5px;font-weight:700;cursor:pointer">Explorar cafeterías</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}"><div></div></sc-if>
+
+  <div style="flex:1;overflow:auto;padding:14px 16px 8px;display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{cartLines}}" as="item" hint-placeholder-count="2">
+      <div style="flex-shrink:0;display:flex;gap:10px;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:12px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.name}}</div>
+          <div style="font-size:11px;color:oklch(0.48 0.03 45)">{{item.cafeteriaName}}</div>
+          <sc-if value="{{item.hasOptions}}" hint-placeholder-val="{{false}}">
+            <div style="font-size:11px;color:oklch(0.62 0.025 50);margin-top:2px">{{item.optionsSummary}}</div>
+          </sc-if>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+            <button type="button" onClick="{{item.onDecrease}}" style="width:26px;height:26px;border-radius:8px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);font-size:14px;font-weight:700;cursor:pointer;color:oklch(0.26 0.04 45)">–</button>
+            <div style="font-size:13px;font-weight:700;min-width:12px;text-align:center">{{item.qty}}</div>
+            <button type="button" onClick="{{item.onIncrease}}" style="width:26px;height:26px;border-radius:8px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);font-size:14px;font-weight:700;cursor:pointer;color:oklch(0.26 0.04 45)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between">
+          <button type="button" onClick="{{item.onRemove}}" style="border:none;background:transparent;cursor:pointer;color:oklch(0.55 0.17 25);padding:2px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+          <div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">{{item.lineTotalLabel}}</div>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45);margin-top:4px">Modalidad de entrega</div>
+    <div style="display:flex;gap:10px">
+      <button type="button" onClick="{{selectRecoger}}" style="flex:1;padding:12px;border-radius:13px;border:1.5px solid {{modalidadRecogerBorder}};background:{{modalidadRecogerBg}};text-align:left;cursor:pointer">
+        <div style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.04 45)">Recoger en cafetería</div>
+        <div style="font-size:11px;color:oklch(0.48 0.03 45);margin-top:2px">Sin costo</div>
+      </button>
+      <button type="button" onClick="{{selectEntrega}}" style="flex:1;padding:12px;border-radius:13px;border:1.5px solid {{modalidadEntregaBorder}};background:{{modalidadEntregaBg}};text-align:left;cursor:pointer">
+        <div style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.04 45)">Entrega en bloque/salón</div>
+        <div style="font-size:11px;color:oklch(0.48 0.03 45);margin-top:2px">+ {{deliveryFeeLabel}}</div>
+      </button>
+    </div>
+
+    <sc-if value="{{modalidadEntrega}}" hint-placeholder-val="{{false}}">
+      <input type="text" value="{{deliveryLocation}}" onChange="{{onChangeDeliveryLocation}}" placeholder="Bloque y salón (ej. Bloque 8 - Salón 302)" style="padding:12px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:13px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
+    </sc-if>
+
+    <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding-top:6px;border-top:1px solid oklch(0.89 0.018 60);margin-top:4px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:oklch(0.48 0.03 45);padding-top:10px"><span>Subtotal</span><span>{{subtotalLabel}}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)"><span>Total</span><span>{{totalLabel}}</span></div>
+    </div>
+  </div>
+
+  <div style="flex-shrink:0;padding:14px 16px;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goCheckout}}" disabled="{{cartContinueDisabled}}" style="width:100%;padding:15px;border:none;border-radius:14px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14.5px;font-weight:700;cursor:pointer">Continuar</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCheckout}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="06-checkout" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromCheckout}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Confirmar pedido</div>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:16px 16px 110px;display:flex;flex-direction:column;gap:20px">
+    <div style="flex-shrink:0;display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Hora de recogida</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{timeSlots}}" as="item" hint-placeholder-count="4">
+          <button type="button" onClick="{{item.onSelect}}" style="padding:10px 13px;border-radius:12px;border:1.5px solid {{item.border}};background:{{item.bg}};color:{{item.color}};font-size:12.5px;font-weight:700;cursor:pointer">{{item.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="flex-shrink:0;display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">Método de pago</div>
+      <sc-for list="{{paymentMethods}}" as="item" hint-placeholder-count="4">
+        <button type="button" onClick="{{item.onSelect}}" style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:13px;border:1.5px solid {{item.border}};background:oklch(0.995 0.006 70);text-align:left;cursor:pointer">
+          <span style="width:19px;height:19px;border-radius:50%;border:1.5px solid oklch(0.66 0.19 45);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <span style="width:10px;height:10px;border-radius:50%;background:{{item.dotBg}}"></span>
+          </span>
+          <span style="font-size:13.5px;font-weight:600;color:oklch(0.26 0.04 45)">{{item.label}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px;background:oklch(0.94 0.015 60);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">{{checkoutCafeteriaName}}</div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;color:oklch(0.48 0.03 45)"><span>Subtotal</span><span>{{summarySubtotalLabel}}</span></div>
+      <sc-if value="{{summaryHasDelivery}}" hint-placeholder-val="{{false}}">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:oklch(0.48 0.03 45)"><span>Domicilio interno</span><span>{{summaryDeliveryLabel}}</span></div>
+      </sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:800;color:oklch(0.26 0.04 45);border-top:1px solid oklch(0.89 0.018 60);padding-top:8px;margin-top:2px"><span>Total</span><span>{{summaryTotalLabel}}</span></div>
+    </div>
+  </div>
+
+  <div style="flex-shrink:0;padding:14px 16px;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{confirmOrder}}" disabled="{{confirmOrderDisabled}}" style="width:100%;padding:15px;border:none;border-radius:14px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14.5px;font-weight:700;cursor:pointer">Confirmar y pagar · {{summaryTotalLabel}}</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isConfirmation}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="07-confirmacion" style="height:100%;display:flex;flex-direction:column;overflow:auto;padding:0 24px">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px 0;text-align:center;min-height:100%">
+    <div style="width:66px;height:66px;border-radius:50%;background:oklch(0.94 0.04 150);display:flex;align-items:center;justify-content:center;color:oklch(0.4 0.13 150)">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>
+    </div>
+    <div>
+      <div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">¡Pedido confirmado!</div>
+      <div style="font-size:24px;font-weight:800;color:oklch(0.66 0.19 45);margin-top:4px">#{{confOrderCode}}</div>
+    </div>
+
+    <div style="width:150px;height:150px;background:repeating-linear-gradient(135deg, oklch(0.91 0.02 60) 0px 10px, oklch(0.955 0.014 65) 10px 20px);border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:oklch(0.55 0.03 50);font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:10px">código QR de recogida</div>
+
+    <div style="flex-shrink:0;width:100%;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;text-align:left">
+      <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{confCafeteriaName}}</div>
+      <div style="font-size:12px;color:oklch(0.48 0.03 45)">{{confCafeteriaLocation}}</div>
+      <div style="font-size:12px;color:oklch(0.48 0.03 45)">Hora estimada: {{confTimeLabel}}</div>
+      <div style="font-size:12px;color:oklch(0.48 0.03 45)">{{confModalidadLabel}}</div>
+    </div>
+
+    <button type="button" onClick="{{goToTracking}}" style="width:100%;padding:15px;border:none;border-radius:14px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px oklch(0.66 0.19 45 / 0.3)">Ver seguimiento</button>
+    <button type="button" onClick="{{goHomeFromConfirmation}}" style="width:100%;padding:13px;border:1.5px solid oklch(0.89 0.018 60);border-radius:14px;background:transparent;color:oklch(0.26 0.04 45);font-size:13.5px;font-weight:700;cursor:pointer">Volver al inicio</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isTracking}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="08-seguimiento" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromTracking}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Seguimiento del pedido</div>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:18px 16px 24px;display:flex;flex-direction:column;gap:20px">
+    <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px">
+      <div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">#{{trkOrderCode}}</div>
+      <div style="font-size:12.5px;color:oklch(0.48 0.03 45)">{{trkCafeteriaName}} · {{trkModalidadLabel}}</div>
+      <div style="font-size:12.5px;color:oklch(0.48 0.03 45)">Hora estimada: {{trkEstimatedLabel}}</div>
+    </div>
+
+    <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.04 45)">Resumen del pedido</div>
+      <sc-for list="{{trkItems}}" as="it" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:oklch(0.48 0.03 45)"><span>{{it.qty}} x {{it.name}}<sc-if value="{{it.hasOptions}}" hint-placeholder-val="{{false}}"><span style="color:oklch(0.62 0.025 50)"> · {{it.optionsSummary}}</span></sc-if></span><span>{{it.lineTotalLabel}}</span></div></sc-for>
+      <sc-if value="{{trkHasDelivery}}" hint-placeholder-val="{{false}}"><div style="display:flex;justify-content:space-between;font-size:12.5px;color:oklch(0.48 0.03 45)"><span>Domicilio interno</span><span>{{trkDeliveryLabel}}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;color:oklch(0.26 0.04 45);border-top:1px solid oklch(0.89 0.018 60);padding-top:8px"><span>Total · {{trkPaymentLabel}}</span><span>{{trkTotalLabel}}</span></div>
+    </div>
+    <sc-if value="{{trkStatusIsCancelled}}" hint-placeholder-val="{{false}}">
+      <div style="flex-shrink:0;padding:14px;border-radius:14px;background:oklch(0.94 0.045 25);color:oklch(0.45 0.13 25);font-size:13px;font-weight:700;text-align:center">Este pedido fue cancelado.</div>
+    </sc-if>
+
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{trkSteps}}" as="item" hint-placeholder-count="4">
+        <div style="display:flex;gap:12px;min-height:52px">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div style="width:14px;height:14px;border-radius:50%;background:{{item.dotBg}};flex-shrink:0;margin-top:2px"></div>
+            <div style="width:2px;flex:1;background:{{item.lineColor}}"></div>
+          </div>
+          <div style="font-size:13.5px;font-weight:700;color:{{item.textColor}};padding-top:1px">{{item.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{trkShowAdvanceButton}}" hint-placeholder-val="{{false}}">
+      <button type="button" onClick="{{trkAdvance}}" style="padding:12px;border-radius:12px;border:1.5px dashed oklch(0.66 0.19 45);background:oklch(0.94 0.045 50);color:oklch(0.5 0.14 45);font-size:12.5px;font-weight:700;cursor:pointer">{{trkAdvanceLabel}}</button>
+    </sc-if>
+
+    <sc-if value="{{trkShowCancelButton}}" hint-placeholder-val="{{false}}">
+      <sc-if value="{{trkShowCancelConfirm}}" hint-placeholder-val="{{false}}">
+        <div style="flex-shrink:0;padding:14px;border-radius:14px;background:oklch(0.94 0.045 25);display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12.5px;font-weight:700;color:oklch(0.4 0.13 25)">¿Seguro que deseas cancelar tu pedido?</div>
+          <div style="display:flex;gap:8px">
+            <button type="button" onClick="{{trkCancelOrder}}" style="flex:1;padding:10px;border:none;border-radius:10px;background:oklch(0.55 0.17 25);color:oklch(0.99 0.008 70);font-size:12.5px;font-weight:700;cursor:pointer">Sí, cancelar</button>
+            <button type="button" onClick="{{trkDismissCancel}}" style="flex:1;padding:10px;border:1.5px solid oklch(0.89 0.018 60);border-radius:10px;background:transparent;color:oklch(0.26 0.04 45);font-size:12.5px;font-weight:700;cursor:pointer">No</button>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{trkShowCancelConfirm}}" hint-placeholder-val="{{false}}"><div></div></sc-if>
+      <button type="button" onClick="{{trkAskCancel}}" style="padding:10px;border:none;background:transparent;color:oklch(0.55 0.17 25);font-size:12.5px;font-weight:700;cursor:pointer;text-align:center">Cancelar pedido</button>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isHistorial}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="09-historial" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:18px 20px 14px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">Mis pedidos</div>
+  </div>
+
+  <sc-if value="{{historyEmpty}}" hint-placeholder-val="{{false}}">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 30px;text-align:center">
+      <div style="font-size:15px;font-weight:800;color:oklch(0.26 0.04 45)">Aún no tienes pedidos</div>
+      <button type="button" onClick="{{goHomeFromHistoryEmpty}}" style="padding:12px 22px;border:none;border-radius:12px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:13.5px;font-weight:700;cursor:pointer">Explorar cafeterías</button>
+    </div>
+  </sc-if>
+
+  <div style="flex:1;overflow:auto;padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px">
+    <sc-for list="{{historyOrders}}" as="item" hint-placeholder-count="2">
+      <div onClick="{{item.onOpen}}" style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:6px;cursor:pointer">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div>
+            <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.cafeteriaName}}</div>
+            <div style="font-size:11px;color:oklch(0.62 0.025 50)">#{{item.code}}</div>
+          </div>
+          <div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{item.statusBg}};color:{{item.statusColor}};flex-shrink:0">{{item.statusLabel}}</div>
+        </div>
+        <div style="font-size:12px;color:oklch(0.48 0.03 45)">{{item.itemsSummary}}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">{{item.totalLabel}}</div><button type="button" onClick="{{item.onFav}}" style="border:none;background:transparent;cursor:pointer;font-size:11.5px;font-weight:700;color:oklch(0.66 0.19 45);padding:4px 0">{{item.favLabel}}</button></div>
+          <button type="button" onClick="{{item.onReorder}}" style="padding:8px 14px;border-radius:10px;border:1.5px solid oklch(0.66 0.19 45);background:transparent;color:oklch(0.66 0.19 45);font-size:11.5px;font-weight:700;cursor:pointer">Volver a pedir</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <sc-for list="{{navTabs}}" as="t" hint-placeholder-count="4"><button type="button" onClick="{{t.onSelect}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:{{t.color}};font-weight:{{t.weight}};font-size:11px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.icon}}"/></svg>{{t.label}}</button></sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isAdminOrders}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="10-admin-pedidos" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <div>
+      <div style="font-size:17px;font-weight:800;color:oklch(0.26 0.04 45)">Pedidos entrantes</div>
+      <div style="font-size:11.5px;color:oklch(0.48 0.03 45)">Central</div>
+    </div>
+    <button type="button" onClick="{{exitToLogin}}" style="width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.48 0.03 45)">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+    </button>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px">
+    <sc-if value="{{adminActiveEmpty}}" hint-placeholder-val="{{false}}">
+      <div style="padding:40px 10px;text-align:center;color:oklch(0.62 0.025 50);font-size:13px">No hay pedidos pendientes por ahora.</div>
+    </sc-if>
+
+    <sc-for list="{{adminActiveOrders}}" as="item" hint-placeholder-count="2">
+      <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:13.5px;font-weight:800;color:oklch(0.26 0.04 45)">#{{item.code}} · {{item.modalidadLabel}}</div>
+            <div style="font-size:11.5px;color:oklch(0.48 0.03 45)">Franja: {{item.timeLabel}}</div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:oklch(0.5 0.14 45)">{{item.elapsedLabel}}</div>
+        </div>
+        <div style="font-size:12.5px;color:oklch(0.48 0.03 45)">{{item.itemsSummary}}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:2px">
+          <div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:oklch(0.95 0.05 80);color:oklch(0.42 0.1 80)">{{item.statusLabel}}</div>
+          <button type="button" onClick="{{item.onAdvance}}" style="padding:9px 14px;border:none;border-radius:11px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:12px;font-weight:700;cursor:pointer">{{item.actionLabel}}</button>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="font-size:12px;font-weight:700;color:oklch(0.48 0.03 45);margin-top:6px">Alta demanda hoy en tu cafetería</div>
+    <sc-for list="{{adminDemand}}" as="d" hint-placeholder-count="2"><div style="flex-shrink:0;padding:10px 13px;border-radius:12px;background:oklch(0.94 0.045 50);display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:oklch(0.26 0.04 45)"><span>{{d.name}}</span><span>{{d.countLabel}}</span></div><div style="height:5px;border-radius:3px;background:oklch(0.89 0.018 60)"><div style="height:5px;border-radius:3px;background:oklch(0.66 0.19 45);width:{{d.barWidth}}"></div></div><div style="font-size:11px;color:oklch(0.48 0.03 45)">Stock: {{d.badgeLabel}}</div></div></sc-for>
+    <sc-if value="{{adminHasCompleted}}" hint-placeholder-val="{{false}}">
+      <div style="font-size:12px;font-weight:700;color:oklch(0.48 0.03 45);margin-top:6px">Completados hoy</div>
+      <sc-for list="{{adminCompletedOrders}}" as="item" hint-placeholder-count="1">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;border-radius:12px;background:oklch(0.94 0.015 60)">
+          <div style="font-size:12px;color:oklch(0.48 0.03 45)">#{{item.code}} · {{item.itemsSummary}}</div>
+          <div style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.totalLabel}}</div>
+        </div>
+      </sc-for>
+    </sc-if>
+  </div>
+
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goAdminOrders}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:oklch(0.66 0.19 45);font-weight:700;font-size:11px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3z"/><path d="M9 8h6M9 12h6"/></svg>
+      Pedidos
+    </button>
+    <button type="button" onClick="{{goAdminInventory}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:oklch(0.48 0.03 45);font-weight:500;font-size:11px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+      Inventario
+    </button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isAdminInventory}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="11-admin-inventario" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <div>
+      <div style="font-size:17px;font-weight:800;color:oklch(0.26 0.04 45)">Inventario</div>
+      <div style="font-size:11.5px;color:oklch(0.48 0.03 45)">Central</div>
+    </div>
+    <button type="button" onClick="{{exitToLogin}}" style="width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.48 0.03 45)">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+    </button>
+  </div>
+
+  <div style="flex:1;overflow:auto;padding:14px 20px 20px;display:flex;flex-direction:column;gap:18px">
+    <sc-for list="{{invCategories}}" as="cat" hint-placeholder-count="4">
+      <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45)">{{cat.name}}</div>
+        <sc-for list="{{cat.products}}" as="item" hint-placeholder-count="2">
+          <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{item.name}}</div>
+              <button type="button" onClick="{{item.onToggleAgotado}}" style="display:flex;align-items:center;gap:6px;border:none;background:transparent;cursor:pointer">
+                <span style="font-size:11px;font-weight:700;color:oklch(0.48 0.03 45)">Agotado</span>
+                <span style="width:34px;height:20px;border-radius:999px;background:{{item.toggleBg}};position:relative;display:inline-block">
+                  <span style="width:16px;height:16px;border-radius:50%;background:oklch(0.995 0.006 70);position:absolute;top:2px;left:{{item.toggleDotLeft}};box-shadow:0 1px 2px oklch(0.3 0.05 40 / 0.3)"></span>
+                </span>
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+                <label style="font-size:10.5px;color:oklch(0.62 0.025 50)">Precio</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <span style="font-size:13px;color:oklch(0.48 0.03 45)">$</span>
+                  <input type="number" value="{{item.priceValue}}" onChange="{{item.onPriceInput}}" style="width:100%;padding:8px 8px;border-radius:9px;border:1px solid oklch(0.89 0.018 60);font-size:13px;background:oklch(0.97 0.014 70);color:oklch(0.26 0.04 45)" />
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <label style="font-size:10.5px;color:oklch(0.62 0.025 50)">Unidades</label>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <button type="button" onClick="{{item.onStockDec}}" style="width:26px;height:26px;border-radius:8px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.97 0.014 70);font-weight:700;cursor:pointer">–</button>
+                  <div style="font-size:13px;font-weight:700;min-width:20px;text-align:center">{{item.stockValue}}</div>
+                  <button type="button" onClick="{{item.onStockInc}}" style="width:26px;height:26px;border-radius:8px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.97 0.014 70);font-weight:700;cursor:pointer">+</button>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:10.5px;color:oklch(0.62 0.025 50)">{{item.freshLabel}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goAdminOrders}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:oklch(0.48 0.03 45);font-weight:500;font-size:11px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3z"/><path d="M9 8h6M9 12h6"/></svg>
+      Pedidos
+    </button>
+    <button type="button" onClick="{{goAdminInventory}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:oklch(0.66 0.19 45);font-weight:700;font-size:11px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+      Inventario
+    </button>
+  </div>
+</div>
+</sc-if>
+
+
+<sc-if value="{{isSearch}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="12-buscar" style="height:100%;display:flex;flex-direction:column;overflow:hidden">
+  <div style="flex-shrink:0;padding:16px 20px 14px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">Buscar y comparar</div><button type="button" onClick="{{goToCart}}" style="position:relative;flex-shrink:0;width:38px;height:38px;border-radius:19px;border:1px solid oklch(0.89 0.018 60);background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><sc-if value="{{hasCartItems}}" hint-placeholder-val="{{false}}"><span style="position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">{{cartCount}}</span></sc-if></button></div>
+    <div style="display:flex;align-items:center;gap:10px;background:oklch(0.97 0.014 70);border:1.5px solid oklch(0.89 0.018 60);border-radius:14px;padding:11px 14px">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(0.62 0.025 50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" value="{{searchQuery}}" onChange="{{onChangeSearch}}" placeholder="Ej. empanada, tinto, combo" style="border:none;outline:none;background:transparent;font-size:13.5px;flex:1;color:oklch(0.26 0.04 45)" />
+    </div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px">
+    <sc-if value="{{hasSearchQuery}}" hint-placeholder-val="{{false}}">
+      <sc-for list="{{searchGroups}}" as="g" hint-placeholder-count="1">
+        <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;flex-direction:column">
+          <div style="font-size:14.5px;font-weight:800;color:oklch(0.26 0.04 45)">{{g.title}}</div>
+          <div style="font-size:11.5px;color:oklch(0.48 0.03 45);margin-bottom:6px">{{g.summary}}</div>
+          <sc-for list="{{g.rows}}" as="row" hint-placeholder-count="3">
+            <div onClick="{{row.onSelect}}" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid oklch(0.92 0.015 60);opacity:{{row.rowOpacity}};cursor:pointer">
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:oklch(0.26 0.04 45)">{{row.cafeteriaName}}<sc-if value="{{row.best}}" hint-placeholder-val="{{false}}"><span style="font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70)">Más económico</span></sc-if></div>
+                <div style="font-size:11px;color:oklch(0.48 0.03 45)">{{row.sub}}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div style="font-size:13.5px;font-weight:800;color:oklch(0.26 0.04 45)">{{row.priceLabel}}</div><div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{row.badgeBg}};color:{{row.badgeColor}}">{{row.badgeLabel}}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+      <sc-if value="{{searchGroupsEmpty}}" hint-placeholder-val="{{false}}"><div style="padding:30px 10px;text-align:center;color:oklch(0.62 0.025 50);font-size:13px">Ninguna cafetería vende ese producto por ahora.</div></sc-if>
+    </sc-if>
+    <sc-if value="{{noSearchQuery}}" hint-placeholder-val="{{true}}">
+      <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45)">Pedidos en alta demanda ahora</div>
+      <sc-for list="{{demandItems}}" as="d" hint-placeholder-count="5">
+        <div onClick="{{d.onSelect}}" style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;gap:12px;align-items:center;cursor:pointer">
+          <div style="width:28px;height:28px;border-radius:9px;background:oklch(0.30 0.05 40);color:oklch(0.99 0.008 70);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{d.rank}}</div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+            <div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{d.name}}</div>
+            <div style="font-size:11.5px;color:oklch(0.48 0.03 45)">{{d.cafeteriaName}} · {{d.countLabel}}</div>
+            <div style="height:5px;border-radius:3px;background:oklch(0.92 0.015 60)"><div style="height:5px;border-radius:3px;background:oklch(0.66 0.19 45);width:{{d.barWidth}}"></div></div>
+          </div>
+          <div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{d.badgeBg}};color:{{d.badgeColor}}">{{d.badgeLabel}}</div>
+        </div>
+      </sc-for>
+    </sc-if>
+  </div>
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <sc-for list="{{navTabs}}" as="t" hint-placeholder-count="4"><button type="button" onClick="{{t.onSelect}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:{{t.color}};font-weight:{{t.weight}};font-size:11px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.icon}}"/></svg>{{t.label}}</button></sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isFavorites}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="13-favoritos" style="height:100%;display:flex;flex-direction:column;overflow:hidden">
+  <div style="flex-shrink:0;padding:16px 20px 14px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)"><div style="font-size:19px;font-weight:800;color:oklch(0.26 0.04 45)">Favoritos de {{studentName}}</div></div>
+  <div style="flex:1;overflow:auto;padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px">
+    <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45)">Pedidos favoritos</div>
+    <sc-if value="{{favOrdersEmpty}}" hint-placeholder-val="{{false}}"><div style="padding:14px;border-radius:12px;background:oklch(0.94 0.015 60);font-size:12.5px;color:oklch(0.48 0.03 45)">Marca un pedido con la estrella en Pedidos para volver a pedirlo aquí.</div></sc-if>
+    <sc-for list="{{favOrders}}" as="o" hint-placeholder-count="1">
+      <div style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between"><div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{o.cafeteriaName}}</div><div style="font-size:14px;font-weight:800;color:oklch(0.26 0.04 45)">{{o.totalLabel}}</div></div>
+        <div style="font-size:12px;color:oklch(0.48 0.03 45)">{{o.itemsSummary}}</div>
+        <div style="display:flex;gap:8px;margin-top:2px"><button type="button" onClick="{{o.onReorder}}" style="flex:1;padding:9px;border:none;border-radius:10px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:12px;font-weight:700;cursor:pointer">Volver a pedir</button><button type="button" onClick="{{o.onRemove}}" style="padding:9px 14px;border:1.5px solid oklch(0.89 0.018 60);border-radius:10px;background:transparent;color:oklch(0.48 0.03 45);font-size:12px;font-weight:700;cursor:pointer">Quitar</button></div>
+      </div>
+    </sc-for>
+    <div style="font-size:12.5px;font-weight:700;color:oklch(0.48 0.03 45);margin-top:8px">Productos favoritos</div>
+    <sc-if value="{{favProductsEmpty}}" hint-placeholder-val="{{false}}"><div style="padding:14px;border-radius:12px;background:oklch(0.94 0.015 60);font-size:12.5px;color:oklch(0.48 0.03 45)">Toca el corazón en un producto para guardarlo.</div></sc-if>
+    <sc-for list="{{favProducts}}" as="p" hint-placeholder-count="2">
+      <div onClick="{{p.onSelect}}" style="flex-shrink:0;background:oklch(0.995 0.006 70);border:1px solid oklch(0.92 0.015 60);border-radius:14px;padding:13px;display:flex;gap:12px;align-items:center;cursor:pointer">
+        <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;color:oklch(0.26 0.04 45)">{{p.name}}</div><div style="font-size:11.5px;color:oklch(0.48 0.03 45)">{{p.cafeteriaName}}</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div style="font-size:13.5px;font-weight:800;color:oklch(0.26 0.04 45)">{{p.priceLabel}}</div><div style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:{{p.badgeBg}};color:{{p.badgeColor}}">{{p.badgeLabel}}</div></div>
+        <button type="button" onClick="{{p.onRemove}}" style="border:none;background:transparent;cursor:pointer;color:oklch(0.66 0.19 45);padding:4px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.4-7 10-7 10z"/></svg></button>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex-shrink:0;display:flex;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <sc-for list="{{navTabs}}" as="t" hint-placeholder-count="4"><button type="button" onClick="{{t.onSelect}}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 10px;border:none;background:transparent;cursor:pointer;color:{{t.color}};font-weight:{{t.weight}};font-size:11px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.icon}}"/></svg>{{t.label}}</button></sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{isPayment}}" hint-placeholder-val="{{false}}">
+<div data-screen-label="14-pasarela" style="height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="flex-shrink:0;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)">
+    <button type="button" onClick="{{goBackFromPayment}}" style="width:38px;height:38px;border-radius:19px;border:none;background:oklch(0.94 0.015 60);display:flex;align-items:center;justify-content:center;cursor:pointer;color:oklch(0.26 0.04 45);flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div style="flex:1"><div style="font-size:16px;font-weight:800;color:oklch(0.26 0.04 45)">Pago seguro</div><div style="font-size:11.5px;color:oklch(0.48 0.03 45)">{{payMethodLabel}} · Simulación de pasarela</div></div>
+  </div>
+  <div style="flex:1;overflow:auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px">
+    <div style="text-align:center;padding:14px;border-radius:14px;background:oklch(0.94 0.015 60)"><div style="font-size:12px;color:oklch(0.48 0.03 45)">Total a pagar</div><div style="font-size:26px;font-weight:800;color:oklch(0.26 0.04 45)">{{summaryTotalLabel}}</div></div>
+    <sc-if value="{{payIsNequi}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Número de celular Nequi</label><input type="text" defaultValue="300 123 4567" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /><div style="font-size:11.5px;color:oklch(0.62 0.025 50)">Recibirás una notificación en tu app Nequi para aprobar el pago.</div></div></sc-if>
+    <sc-if value="{{payIsCard}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:12px"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Número de tarjeta</label><input type="text" defaultValue="4242 4242 4242 4242" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /></div><div style="display:flex;gap:10px"><input type="text" defaultValue="08/28" style="flex:1;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /><input type="text" defaultValue="123" style="flex:1;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /></div></div></sc-if>
+    <sc-if value="{{payIsPse}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Banco</label><select style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)"><option>Bancolombia</option><option>Davivienda</option><option>Banco de Bogotá</option><option>BBVA</option></select><div style="font-size:11.5px;color:oklch(0.62 0.025 50)">Serás redirigido al portal de tu banco (simulado).</div></div></sc-if>
+    <div style="font-size:11px;color:oklch(0.62 0.025 50);text-align:center">Entorno de pruebas: no se realiza ningún cobro real.</div>
+  </div>
+  <div style="flex-shrink:0;padding:14px 16px;border-top:1px solid oklch(0.89 0.018 60);background:oklch(0.995 0.006 70)"><button type="button" onClick="{{payNow}}" style="width:100%;padding:15px;border:none;border-radius:14px;background:oklch(0.66 0.19 45);color:oklch(0.99 0.008 70);font-size:14.5px;font-weight:700;cursor:pointer">Pagar {{summaryTotalLabel}}</button></div>
+  <sc-if value="{{payProcessing}}" hint-placeholder-val="{{false}}">
+    <div style="position:absolute;inset:0;background:oklch(0.97 0.014 70 / 0.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:40"><div style="width:44px;height:44px;border-radius:50%;border:4px solid oklch(0.89 0.018 60);border-top-color:oklch(0.66 0.19 45);animation:ccspin 0.8s linear infinite"></div><div style="font-size:15px;font-weight:800;color:oklch(0.26 0.04 45)">Procesando pago…</div><div style="font-size:12px;color:oklch(0.48 0.03 45)">Conectando con {{payMethodLabel}}</div></div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{toastVisible}}" hint-placeholder-val="{{false}}">
+<div style="position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:oklch(0.26 0.04 45);color:oklch(0.99 0.008 70);padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 8px 20px oklch(0.26 0.04 45 / 0.3);white-space:nowrap;z-index:50">{{toastText}}</div>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;login&quot;,&quot;home&quot;,&quot;adminOrders&quot;],&quot;section&quot;:&quot;Demo&quot;},&quot;showDemoControls&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+const CATS = ['Bebidas','Comida','Combos','Snacks'];
+const SIZE_OPTS = [{label:'Pequeño',delta:-500},{label:'Mediano',delta:0},{label:'Grande',delta:900}];
+const AZUCAR_OPTS = ['Sin azúcar','Normal','Extra dulce'];
+const STATUS_FLOW = ['recibido','preparacion','listo','entregado'];
+const STATUS_LABEL = {recibido:'Recibido',preparacion:'En preparación',listo:'Listo',entregado:'Entregado',cancelado:'Cancelado'};
+const QUEUE_LABEL = {baja:'Fila baja',media:'Fila media',alta:'Fila alta'};
+const MANAGED_ID = 'c1';
+const DELIVERY_FEE = 500;
+const PAY_LABEL = {nequi:'Nequi',tarjeta:'Tarjeta',pse:'PSE',efectivo:'Efectivo al recoger'};
+const DEMAND = [{cid:'c1',pid:'p5',count:48},{cid:'c3',pid:'p18',count:41},{cid:'c1',pid:'p8',count:37},{cid:'c2',pid:'p15',count:29},{cid:'c3',pid:'p19',count:24},{cid:'c2',pid:'p16',count:18}];
+
+function productArt(p){
+  const n = p.name.toLowerCase(), c = p.category;
+  const BR='oklch(0.42 0.07 50)', BR2='oklch(0.34 0.06 45)', GO='oklch(0.78 0.13 75)', GO2='oklch(0.68 0.13 65)', CR='oklch(0.96 0.02 75)', ST='oklch(0.6 0.03 50)';
+  const k = c==='Combos'?'combo': /empanada|arepa|pastel|pan de/.test(n)?'pastry': /sándwich|wrap|croissant|hamburguesa|perro/.test(n)?'sandwich': /ensalada|bowl|yogurt/.test(n)?'bowl': /galleta|brownie|cookie|granola|barra/.test(n)?'cookie': /papas|chips|frutos|mix/.test(n)?'bag': /limonada|jugo|agua|frapp|maltea|helado|batido/.test(n)?'glass': c==='Snacks'?'bag': c==='Comida'?'sandwich':'cup';
+  const N='none';
+  if (k==='cup') return {artP1:'M16 26h28v12a10 10 0 01-10 10h-8a10 10 0 01-10-10z',artF1:BR,artP2:'M44 29h3a7 7 0 010 14h-3v-3h3a4 4 0 000-8h-3z',artF2:BR2,artP3:'M24 10q3 5 0 10M33 8q3 5 0 10',artF3:N,artS3:ST};
+  if (k==='glass') { const col = /mora/.test(n)?'oklch(0.45 0.13 340)':/mango/.test(n)?'oklch(0.82 0.15 75)':/frapp/.test(n)?'oklch(0.7 0.06 60)':/maltea/.test(n)?'oklch(0.93 0.03 85)':/agua/.test(n)?'oklch(0.85 0.06 220)':/durazno/.test(n)?'oklch(0.78 0.13 60)':/cereza/.test(n)?'oklch(0.7 0.16 20)':/limonada/.test(n)?'oklch(0.9 0.1 110)':'oklch(0.75 0.1 60)'; return {artP1:'M19 16h26l-3 34a3 3 0 01-3 3H25a3 3 0 01-3-3z',artF1:col,artP2:'M21 16h22l-.6 7H21.6z',artF2:CR,artP3:'M39 6l-3 14',artF3:N,artS3:BR2}; }
+  if (k==='pastry') return {artP1:'M9 44c0-15 10-24 23-24s23 9 23 24z',artF1:GO,artP2:'M15 40c2-8 8-13 17-13s13 3 15 8z',artF2:GO2,artP3:'M9 44l4-3 4 3 4-3 4 3 4-3 4 3 4-3 4 3 4-3 4 3 4-3',artF3:N,artS3:BR2};
+  if (k==='sandwich') return {artP1:'M10 43h44v5a4 4 0 01-4 4H14a4 4 0 01-4-4z',artF1:GO,artP2:'M8 33h48v10H8z',artF2:'oklch(0.7 0.14 145)',artP3:'M10 33a22 16 0 0144 0z',artF3:GO,artS3:N};
+  if (k==='bowl') return {artP1:'M8 32h48c0 12-10 22-24 22S8 44 8 32z',artF1:BR,artP2:'M13 32a19 13 0 0138 0z',artF2:'oklch(0.72 0.15 40)',artP3:'M20 32c1-7 6-11 12-11',artF3:N,artS3:CR};
+  if (k==='combo') return {artP1:'M8 26h22v14a9 9 0 01-9 9h-4a9 9 0 01-9-9z',artF1:BR,artP2:'M32 50c0-10 7-16 13-16s13 6 13 16z',artF2:GO,artP3:'M14 12q3 5 0 10M21 10q3 5 0 10',artF3:N,artS3:ST};
+  if (k==='cookie') return {artP1:'M32 12a20 20 0 100 40 20 20 0 000-40z',artF1:'oklch(0.75 0.09 70)',artP2:'M23 24a3.5 3.5 0 107 0 3.5 3.5 0 00-7 0zM36 34a3.5 3.5 0 107 0 3.5 3.5 0 00-7 0zM25 39a3 3 0 106 0 3 3 0 00-6 0z',artF2:BR2,artP3:'M0 0',artF3:N,artS3:N};
+  return {artP1:'M16 12h32l-3 40H19z',artF1:'oklch(0.66 0.19 45)',artP2:'M22 26h20v14H22z',artF2:CR,artP3:'M16 12h32',artF3:N,artS3:BR2};
+}
+function fmtPrice(n){ return '$ ' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+function fmtHM(d){ let h=d.getHours(), m=d.getMinutes(); const ap=h<12?'a.m.':'p.m.'; let h12=h%12; if(h12===0)h12=12; const mm=m<10?'0'+m:''+m; return h12+':'+mm+' '+ap; }
+
+function seedCafeterias(){
+  return [
+    { id:'c1', name:'Central', location:'Bloque 8 · Piso 1', distanceMin:3, open:true, queue:'baja', waitMin:2,
+      hoursText:'Abre 7:00 a.m. · Cierra 7:00 p.m.',
+      promo:'Combo Mañanero: tinto + empanada a $ 5.500 hasta las 9:00 a.m.',
+      products:[
+        {id:'p1', category:'Bebidas', name:'Tinto', desc:'Café negro tradicional, recién colado.', price:2500, stock:40, freshMin:2, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p2', category:'Bebidas', name:'Cappuccino', desc:'Espresso con leche vaporizada y espuma cremosa.', price:5000, stock:15, freshMin:5, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p3', category:'Bebidas', name:'Limonada de coco', desc:'Limonada natural con crema de coco.', price:6500, stock:3, freshMin:1, hasSize:true, hasAzucar:false, adiciones:[]},
+        {id:'p4', category:'Bebidas', name:'Jugo de mora', desc:'Jugo natural de mora en agua.', price:5500, stock:0, freshMin:20, hasSize:false, hasAzucar:false, adiciones:[]},
+        {id:'p5', category:'Comida', name:'Empanada de pollo', desc:'Empanada frita rellena de pollo y papa.', price:3500, stock:8, freshMin:3, adiciones:[{name:'Ají casero',price:0},{name:'Extra queso',price:1000}]},
+        {id:'p6', category:'Comida', name:'Sándwich de jamón y queso', desc:'Pan integral, jamón, queso y vegetales.', price:7000, stock:12, freshMin:8, adiciones:[{name:'Extra queso',price:1000},{name:'Tocineta',price:1500}]},
+        {id:'p7', category:'Comida', name:'Arepa con queso', desc:'Arepa asada rellena de queso campesino.', price:4000, stock:0, freshMin:35, adiciones:[]},
+        {id:'p8', category:'Combos', name:'Combo Mañanero', desc:'Tinto + empanada de pollo.', price:5500, stock:10, freshMin:2, adiciones:[]},
+        {id:'p9', category:'Combos', name:'Combo Ejecutivo', desc:'Sándwich + jugo + postre del día.', price:12000, stock:5, freshMin:4, adiciones:[]},
+        {id:'p10', category:'Snacks', name:'Papas de plátano', desc:'Snack crocante de plátano verde.', price:3000, stock:20, freshMin:15, adiciones:[]},
+        {id:'p39', category:'Bebidas', name:'Chocolate caliente', desc:'Chocolate espeso con leche entera.', price:4500, stock:12, freshMin:3, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p40', category:'Bebidas', name:'Té helado de durazno', desc:'Té negro frío con durazno.', price:4000, stock:4, freshMin:6, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p41', category:'Comida', name:'Pan de bono', desc:'Pan de bono recién horneado.', price:2000, stock:18, freshMin:2, adiciones:[]},
+        {id:'p42', category:'Comida', name:'Perro caliente', desc:'Salchicha, queso, papas trituradas y salsas.', price:6500, stock:9, freshMin:7, adiciones:[{name:'Extra queso',price:1000}]},
+        {id:'p43', category:'Combos', name:'Combo Estudiante', desc:'Sándwich + jugo de mora + galleta.', price:11500, stock:0, freshMin:25, adiciones:[]},
+        {id:'p44', category:'Snacks', name:'Brownie', desc:'Brownie de chocolate con nueces.', price:3500, stock:2, freshMin:9, adiciones:[]},
+        {id:'p11', category:'Snacks', name:'Galletas de avena', desc:'Galletas artesanales de avena y miel.', price:2800, stock:6, freshMin:10, adiciones:[]},
+      ]
+    },
+    { id:'c2', name:'Yariguíes', location:'Bloque de Ingeniería', distanceMin:6, open:true, queue:'media', waitMin:7,
+      hoursText:'Abre 7:30 a.m. · Cierra 6:00 p.m.',
+      promo:'Combo Tarde de estudio con 10% de descuento después de las 2:00 p.m.',
+      products:[
+        {id:'p12', category:'Bebidas', name:'Café americano', desc:'Café filtrado suave.', price:2800, stock:30, freshMin:6, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p13', category:'Bebidas', name:'Chocolate caliente', desc:'Chocolate espeso con leche.', price:4500, stock:0, freshMin:40, hasSize:true, hasAzucar:false, adiciones:[]},
+        {id:'p14', category:'Comida', name:'Empanada de pollo', desc:'Empanada frita rellena de pollo y papa.', price:3800, stock:2, freshMin:4, adiciones:[]},
+        {id:'p15', category:'Comida', name:'Wrap de pollo', desc:'Tortilla integral con pollo, vegetales y salsa.', price:8500, stock:9, freshMin:12, adiciones:[{name:'Extra pollo',price:2000}]},
+        {id:'p16', category:'Combos', name:'Combo Tarde de estudio', desc:'Café + wrap + snack.', price:9000, stock:7, freshMin:9, adiciones:[]},
+        {id:'p45', category:'Bebidas', name:'Latte', desc:'Espresso con abundante leche vaporizada.', price:5200, stock:14, freshMin:4, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p46', category:'Bebidas', name:'Jugo de mango', desc:'Jugo natural de mango en leche o agua.', price:5500, stock:8, freshMin:5, hasSize:true, hasAzucar:false, adiciones:[]},
+        {id:'p47', category:'Comida', name:'Hamburguesa clásica', desc:'Carne, queso, lechuga, tomate y papas.', price:13500, stock:5, freshMin:10, adiciones:[{name:'Tocineta',price:2000},{name:'Extra queso',price:1000}]},
+        {id:'p48', category:'Comida', name:'Arepa con queso', desc:'Arepa asada rellena de queso.', price:4200, stock:0, freshMin:33, adiciones:[]},
+        {id:'p49', category:'Combos', name:'Combo Almuerzo rápido', desc:'Hamburguesa + limonada + papas.', price:18000, stock:3, freshMin:7, adiciones:[]},
+        {id:'p50', category:'Snacks', name:'Cookie de chocolate', desc:'Galleta grande con chips de chocolate.', price:3000, stock:15, freshMin:11, adiciones:[]},
+        {id:'p51', category:'Snacks', name:'Papas fritas', desc:'Porción de papas a la francesa.', price:4500, stock:0, freshMin:28, adiciones:[]},
+        {id:'p17', category:'Snacks', name:'Mix de frutos secos', desc:'Almendras, maní y pasas.', price:4000, stock:14, freshMin:25, adiciones:[]},
+      ]
+    },
+    { id:'c3', name:'Guane', location:'Biblioteca Central', distanceMin:9, open:true, queue:'alta', waitMin:15,
+      hoursText:'Abre 8:00 a.m. · Cierra 8:00 p.m.',
+      promo:'Frappé de café 2x1 los martes y jueves.',
+      products:[
+        {id:'p18', category:'Bebidas', name:'Tinto', desc:'Café negro tradicional.', price:2500, stock:25, freshMin:3, hasSize:false, hasAzucar:true, adiciones:[]},
+        {id:'p19', category:'Bebidas', name:'Frappé de café', desc:'Café helado batido con crema.', price:7000, stock:4, freshMin:2, hasSize:true, hasAzucar:false, adiciones:[]},
+        {id:'p20', category:'Comida', name:'Empanada de carne', desc:'Empanada frita rellena de carne desmechada.', price:3800, stock:10, freshMin:6, adiciones:[]},
+        {id:'p21', category:'Comida', name:'Croissant jamón y queso', desc:'Croissant horneado relleno.', price:6000, stock:0, freshMin:50, adiciones:[]},
+        {id:'p22', category:'Combos', name:'Combo Biblioteca', desc:'Tinto + croissant.', price:8500, stock:6, freshMin:5, adiciones:[]},
+        {id:'p52', category:'Bebidas', name:'Té chai', desc:'Té especiado con leche.', price:4200, stock:11, freshMin:8, hasSize:true, hasAzucar:true, adiciones:[]},
+        {id:'p53', category:'Bebidas', name:'Limonada cerezada', desc:'Limonada natural con cereza y hielo.', price:6000, stock:7, freshMin:4, hasSize:true, hasAzucar:false, adiciones:[]},
+        {id:'p54', category:'Bebidas', name:'Jugo de mora', desc:'Jugo natural de mora.', price:5500, stock:0, freshMin:31, hasSize:false, hasAzucar:false, adiciones:[]},
+        {id:'p55', category:'Comida', name:'Sándwich de pollo', desc:'Pan artesanal, pollo desmechado y vegetales.', price:8500, stock:6, freshMin:6, adiciones:[{name:'Extra pollo',price:2000}]},
+        {id:'p56', category:'Comida', name:'Pan de queso', desc:'Pan de queso tibio.', price:2500, stock:20, freshMin:3, adiciones:[]},
+        {id:'p57', category:'Combos', name:'Combo Café y pan', desc:'Tinto + pan de queso.', price:4500, stock:12, freshMin:3, adiciones:[]},
+        {id:'p58', category:'Snacks', name:'Mix de frutos secos', desc:'Almendras, maní y pasas.', price:4000, stock:3, freshMin:16, adiciones:[]},
+        {id:'p59', category:'Snacks', name:'Galletas de avena', desc:'Galletas artesanales de avena y miel.', price:2800, stock:9, freshMin:12, adiciones:[]},
+        {id:'p23', category:'Snacks', name:'Barra de granola', desc:'Barra artesanal de avena y miel.', price:3200, stock:18, freshMin:18, adiciones:[]},
+      ]
+    },
+  ];
+}
+
+function seedHistory(){
+  const now = Date.now();
+  return [
+    { id:'CC-1042', cafeteriaId:'c2', cafeteriaName:'Yariguíes', cafeteriaLocation:'Bloque de Ingeniería',
+      items:[{name:'Café americano',qty:1,unitPrice:2800,optionsSummary:'Mediano · Normal'},{name:'Wrap de pollo',qty:1,unitPrice:8500,optionsSummary:''}],
+      subtotal:11300, deliveryFee:0, total:11300, modalidad:'recoger', deliveryLocation:'', timeSlotLabel:'10:20 a.m. – 10:30 a.m.', payment:'nequi',
+      status:'entregado', createdAt: now-2*24*3600000, statusUpdatedAt: now-2*24*3600000+900000 },
+    { id:'CC-0917', cafeteriaId:'c1', cafeteriaName:'Central', cafeteriaLocation:'Bloque 8 · Piso 1',
+      items:[{name:'Tinto',qty:2,unitPrice:2500,optionsSummary:'Mediano · Normal'},{name:'Empanada de pollo',qty:1,unitPrice:3500,optionsSummary:'Ají casero'}],
+      subtotal:8500, deliveryFee:2000, total:10500, modalidad:'entrega', deliveryLocation:'Bloque 12 - Salón 204', timeSlotLabel:'8:10 a.m. – 8:20 a.m.', payment:'efectivo',
+      status:'entregado', createdAt: now-5*24*3600000, statusUpdatedAt: now-5*24*3600000+800000 },
+  ];
+}
+
+class Component extends DCLogic {
+  cartSeq = 1;
+  baseTime = new Date();
+  state = {
+    authMode: 'login', regName: '', names: {}, favProducts: {}, favOrders: {}, payStage: 'form',
+    screen: (this.props.startScreen || 'home'),
+    role: (this.props.startScreen === 'adminOrders') ? 'cafetero' : 'student',
+    cafeterias: seedCafeterias(),
+    orderHistory: seedHistory(),
+    studentName: 'Camila',
+    campus: 'campus-principal',
+    loginEmail: '', loginPassword: '', loginError: '',
+    cafeteroUser: '', cafeteroPassword: '',
+    searchQuery: '',
+    selectedCafeteriaId: null,
+    activeCategory: 'Bebidas',
+    selectedProductId: null,
+    productOptions: { sizeIndex: 1, azucarIndex: 1, adiciones: [], qty: 1 },
+    cart: [],
+    modalidad: 'recoger',
+    deliveryLocation: '',
+    timeSlotId: null,
+    paymentMethod: null,
+    currentOrderId: null,
+    showCancelConfirm: false,
+    toastVisible: false, toastText: '',
+    clockNow: Date.now(),
+  };
+
+  componentDidMount(){ this._tick = setInterval(() => this.setState({ clockNow: Date.now() }), 20000); }
+  componentWillUnmount(){ clearInterval(this._tick); clearTimeout(this._toastTimer); }
+
+  showToast(text){
+    clearTimeout(this._toastTimer);
+    this.setState({ toastText: text, toastVisible: true });
+    this._toastTimer = setTimeout(() => this.setState({ toastVisible: false }), 1800);
+  }
+
+  getCafeteria(id){ return this.state.cafeterias.find(c => c.id === id) || null; }
+  getProduct(cafeteria, id){ return cafeteria ? cafeteria.products.find(p => p.id === id) : null; }
+
+  freshLabel(p){
+    const mins = p.freshMin != null ? p.freshMin : Math.max(0, Math.round((this.state.clockNow - (p.updatedAt || this.baseTime.getTime())) / 60000));
+    return mins < 1 ? 'Actualizado hace instantes' : ('Actualizado hace ' + mins + ' min');
+  }
+
+  defaultOptionsFor(p){ return { sizeIndex: 1, azucarIndex: 1, adiciones: (p.adiciones || []).map(() => false), qty: 1 }; }
+
+  computeUnitPrice(p, opts){
+    let price = p.price;
+    if (p.hasSize) price += SIZE_OPTS[opts.sizeIndex].delta;
+    (p.adiciones || []).forEach((a, i) => { if (opts.adiciones[i]) price += a.price; });
+    return price;
+  }
+
+  optionsSummary(p, opts){
+    const parts = [];
+    if (p.hasSize) parts.push(SIZE_OPTS[opts.sizeIndex].label);
+    if (p.hasAzucar) parts.push(AZUCAR_OPTS[opts.azucarIndex]);
+    (p.adiciones || []).forEach((a, i) => { if (opts.adiciones[i]) parts.push('+ ' + a.name); });
+    return parts.join(' · ');
+  }
+
+  userKey(){ return (this.state.loginEmail || 'demo').trim().toLowerCase(); }
+  handleLogin(){
+    const st = this.state;
+    if (st.role === 'student') {
+      const email = st.loginEmail.trim().toLowerCase();
+      if (!email.endsWith('@correo.udes.edu.co')) { this.setState({ loginError: 'Usa tu correo institucional @correo.udes.edu.co' }); return; }
+      const reg = st.authMode === 'register';
+      if (reg && !st.regName.trim()) { this.setState({ loginError: 'Ingresa tu nombre' }); return; }
+      const local = email.split('@')[0].split('.')[0];
+      const name = reg ? st.regName.trim().split(' ')[0] : (st.names[email] || (local.charAt(0).toUpperCase() + local.slice(1)));
+      this.setState(s => ({ loginError: '', screen: 'home', studentName: name, names: { ...s.names, [email]: name } }));
+      if (reg) this.showToast('Cuenta creada');
+    } else {
+      if (!st.cafeteroUser.trim()) { this.setState({ loginError: 'Ingresa tu usuario de cafetería' }); return; }
+      this.setState({ loginError: '', screen: 'adminOrders' });
+    }
+  }
+  toggleFavProduct(cid, pid){ const k = this.userKey(), id = cid + '|' + pid; this.setState(s => { const cur = s.favProducts[k] || []; return { favProducts: { ...s.favProducts, [k]: cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id] } }; }); }
+  toggleFavOrder(id){ const k = this.userKey(); this.setState(s => { const cur = s.favOrders[k] || []; return { favOrders: { ...s.favOrders, [k]: cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id] } }; }); }
+  startPayment(){ if (this.state.paymentMethod === 'efectivo') { this.placeOrder(); return; } this.setState({ screen: 'payment', payStage: 'form' }); }
+  payNow(){ this.setState({ payStage: 'processing' }); this._payT = setTimeout(() => { this.placeOrder(); this.setState({ payStage: 'form' }); }, 2400); }
+  badgeFor(c, p){
+    if (!c.open) return { label: 'Cerrado', bg: 'oklch(0.9 0.01 60)', color: 'oklch(0.5 0.02 50)' };
+    if (p.stock <= 0) return { label: 'Agotado', bg: 'oklch(0.9 0.01 60)', color: 'oklch(0.5 0.02 50)' };
+    if (p.stock <= 5) return { label: 'Quedan ' + p.stock, bg: 'oklch(0.95 0.05 80)', color: 'oklch(0.42 0.1 80)' };
+    return { label: 'Disponible', bg: 'oklch(0.94 0.04 150)', color: 'oklch(0.4 0.1 150)' };
+  }
+
+  openCafeteria(id){ this.setState({ selectedCafeteriaId: id, activeCategory: 'Bebidas', screen: 'cafeteria' }); }
+
+  openProduct(id){
+    const c = this.getCafeteria(this.state.selectedCafeteriaId);
+    const p = this.getProduct(c, id);
+    this.setState({ selectedProductId: id, productOptions: this.defaultOptionsFor(p), screen: 'product' });
+  }
+
+  openProductFromSearch(cafeteriaId, productId){
+    const c = this.getCafeteria(cafeteriaId);
+    const p = this.getProduct(c, productId);
+    this.setState({ selectedCafeteriaId: cafeteriaId, activeCategory: p.category, selectedProductId: productId, productOptions: this.defaultOptionsFor(p), screen: 'product' });
+  }
+
+  addToCart(){
+    const c = this.getCafeteria(this.state.selectedCafeteriaId);
+    const p = this.getProduct(c, this.state.selectedProductId);
+    const opts = this.state.productOptions;
+    const line = { key: 'cl' + (this.cartSeq++), cafeteriaId: c.id, cafeteriaName: c.name, productId: p.id, name: p.name, qty: opts.qty, unitPrice: this.computeUnitPrice(p, opts), optionsSummary: this.optionsSummary(p, opts) };
+    this.setState(s => ({ cart: [...s.cart, line], screen: 'cafeteria' }));
+    this.showToast('Agregado al carrito');
+  }
+
+  cartLineTotal(l){ return l.unitPrice * l.qty; }
+  changeLineQty(key, delta){ this.setState(s => ({ cart: s.cart.map(l => l.key !== key ? l : { ...l, qty: Math.max(1, l.qty + delta) }) })); }
+  removeLine(key){ this.setState(s => ({ cart: s.cart.filter(l => l.key !== key) })); }
+  cartSubtotal(){ return this.state.cart.reduce((sum, l) => sum + this.cartLineTotal(l), 0); }
+
+  getTimeSlots(){
+    const start = new Date(this.baseTime.getTime()); start.setSeconds(0, 0);
+    let rem = 10 - (start.getMinutes() % 10); if (rem <= 0) rem += 10;
+    start.setMinutes(start.getMinutes() + rem);
+    const slots = [];
+    for (let i = 0; i < 4; i++) {
+      const s = new Date(start.getTime() + i * 10 * 60000);
+      const e = new Date(s.getTime() + 10 * 60000);
+      slots.push({ id: 'slot' + i, label: fmtHM(s) + ' – ' + fmtHM(e) });
+    }
+    return slots;
+  }
+
+  placeOrder(){
+    const subtotal = this.cartSubtotal();
+    const fee = this.state.modalidad === 'entrega' ? DELIVERY_FEE : 0;
+    const slot = this.getTimeSlots().find(s => s.id === this.state.timeSlotId);
+    const code = 'CC-' + Math.floor(1000 + Math.random() * 9000);
+    const first = this.state.cart[0];
+    const c = this.getCafeteria(first ? first.cafeteriaId : this.state.selectedCafeteriaId);
+    const order = {
+      id: code, cafeteriaId: c.id, cafeteriaName: c.name, cafeteriaLocation: c.location,
+      items: this.state.cart.map(l => ({ name: l.name, qty: l.qty, unitPrice: l.unitPrice, optionsSummary: l.optionsSummary })),
+      subtotal, deliveryFee: fee, total: subtotal + fee, modalidad: this.state.modalidad, deliveryLocation: this.state.deliveryLocation,
+      timeSlotLabel: slot ? slot.label : '', payment: this.state.paymentMethod, status: 'recibido', createdAt: Date.now(), statusUpdatedAt: Date.now(),
+    };
+    this.setState(s => ({ orderHistory: [order, ...s.orderHistory], currentOrderId: code, cart: [], modalidad: 'recoger', deliveryLocation: '', timeSlotId: null, paymentMethod: null, screen: 'confirmation' }));
+  }
+
+  advanceOrderStatusById(id){
+    this.setState(s => ({ orderHistory: s.orderHistory.map(o => o.id !== id ? o : { ...o, status: STATUS_FLOW[Math.min(STATUS_FLOW.indexOf(o.status) + 1, STATUS_FLOW.length - 1)], statusUpdatedAt: Date.now() }) }));
+  }
+
+  cancelOrder(id){
+    this.setState(s => ({ orderHistory: s.orderHistory.map(o => (o.id !== id || o.status !== 'recibido') ? o : { ...o, status: 'cancelado', statusUpdatedAt: Date.now() }), showCancelConfirm: false }));
+  }
+
+  reorder(order){
+    const lines = order.items.map(it => ({ key: 'cl' + (this.cartSeq++), cafeteriaId: order.cafeteriaId, cafeteriaName: order.cafeteriaName, productId: null, name: it.name, qty: it.qty, unitPrice: it.unitPrice, optionsSummary: it.optionsSummary }));
+    this.setState(s => ({ cart: [...s.cart, ...lines], screen: 'cart' }));
+    this.showToast('Productos agregados al carrito');
+  }
+
+  toggleAgotado(productId){
+    this.setState(s => ({ cafeterias: s.cafeterias.map(c => c.id !== MANAGED_ID ? c : { ...c, products: c.products.map(p => {
+      if (p.id !== productId) return p;
+      if (p.stock > 0) return { ...p, lastStock: p.stock, stock: 0, updatedAt: Date.now(), freshMin: null };
+      return { ...p, stock: p.lastStock || 10, updatedAt: Date.now(), freshMin: null };
+    }) }) }));
+  }
+
+  setProductPrice(productId, value){
+    const n = parseInt(value, 10); if (isNaN(n) || n < 0) return;
+    this.setState(s => ({ cafeterias: s.cafeterias.map(c => c.id !== MANAGED_ID ? c : { ...c, products: c.products.map(p => p.id !== productId ? p : { ...p, price: n, updatedAt: Date.now(), freshMin: null }) }) }));
+  }
+
+  setProductStock(productId, delta){
+    this.setState(s => ({ cafeterias: s.cafeterias.map(c => c.id !== MANAGED_ID ? c : { ...c, products: c.products.map(p => p.id !== productId ? p : { ...p, stock: Math.max(0, p.stock + delta), updatedAt: Date.now(), freshMin: null }) }) }));
+  }
+
+  renderVals(){
+    const st = this.state;
+    const cafeteria = this.getCafeteria(st.selectedCafeteriaId);
+    const product = cafeteria ? this.getProduct(cafeteria, st.selectedProductId) : null;
+    const campusLabel = st.campus === 'campus-norte' ? 'Campus Norte' : 'Campus Principal';
+    const SEL_BG = 'oklch(0.66 0.19 45)', SEL_COLOR = 'oklch(0.99 0.008 70)', SEL_BORDER = 'oklch(0.66 0.19 45)';
+    const UNSEL_BG = 'oklch(0.995 0.006 70)', UNSEL_COLOR = 'oklch(0.36 0.03 45)', UNSEL_BORDER = 'oklch(0.89 0.018 60)';
+
+    const q = st.searchQuery.trim().toLowerCase();
+    const hasSearchQuery = q.length > 0;
+    const searchResults = [];
+    if (hasSearchQuery) {
+      st.cafeterias.forEach(c => {
+        c.products.forEach(p => {
+          if (p.name.toLowerCase().includes(q)) {
+            const disabled = !c.open || p.stock <= 0;
+            searchResults.push({
+              key: c.id + '-' + p.id, name: p.name, cafeteriaName: c.name, cafeteriaLocation: c.location,
+              priceLabel: fmtPrice(p.price),
+              badgeLabel: !c.open ? 'Cerrado' : (p.stock <= 0 ? 'Agotado' : (p.stock <= 5 ? ('Quedan ' + p.stock) : 'Disponible')),
+              badgeBg: !c.open || p.stock <= 0 ? 'oklch(0.9 0.01 60)' : (p.stock <= 5 ? 'oklch(0.95 0.05 80)' : 'oklch(0.94 0.04 150)'),
+              badgeColor: !c.open || p.stock <= 0 ? 'oklch(0.5 0.02 50)' : (p.stock <= 5 ? 'oklch(0.42 0.1 80)' : 'oklch(0.4 0.1 150)'),
+              onSelect: disabled ? undefined : () => this.openProductFromSearch(c.id, p.id),
+            });
+          }
+        });
+      });
+    }
+
+    const queueColor = (lvl) => lvl === 'baja' ? 'oklch(0.55 0.13 150)' : lvl === 'media' ? 'oklch(0.6 0.14 80)' : 'oklch(0.55 0.17 25)';
+    const cafeteriaCards = st.cafeterias.map(c => {
+      const words = c.name.split(' ');
+      const initials = (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : '')).toUpperCase();
+      return {
+        id: c.id, name: c.name, initials, location: c.location, distanceLabel: c.distanceMin + ' min a pie',
+        openLabel: c.open ? 'Abierto' : 'Cerrado', openBg: c.open ? 'oklch(0.94 0.04 150)' : 'oklch(0.92 0.01 60)', openColor: c.open ? 'oklch(0.4 0.1 150)' : 'oklch(0.5 0.02 50)',
+        queueLabel: QUEUE_LABEL[c.queue], queueColor: queueColor(c.queue),
+        waitLabel: c.open ? (c.waitMin + ' min de espera') : 'Cerrado ahora',
+        freshLabel: this.freshLabel(c.products[0] || { freshMin: 0 }),
+        onSelect: () => this.openCafeteria(c.id),
+      };
+    });
+
+    let cdVals = {};
+    if (cafeteria) {
+      const catProducts = cafeteria.products.filter(p => p.category === st.activeCategory);
+      cdVals = {
+        cdName: cafeteria.name, cdLocation: cafeteria.location, cdOpen: cafeteria.open, cdClosed: !cafeteria.open, cdHoursText: cafeteria.hoursText,
+        cdQueueLabel: QUEUE_LABEL[cafeteria.queue], cdWaitLabel: 'Espera aprox. ' + cafeteria.waitMin + ' min',
+        cdFreshLabel: this.freshLabel(cafeteria.products[0] || { freshMin: 0 }),
+        cdHasPromo: !!cafeteria.promo, cdPromo: cafeteria.promo,
+        categories: CATS.map(cat => ({ name: cat, bg: cat === st.activeCategory ? SEL_BG : UNSEL_BG, color: cat === st.activeCategory ? SEL_COLOR : UNSEL_COLOR, border: cat === st.activeCategory ? SEL_BORDER : UNSEL_BORDER, onSelect: () => this.setState({ activeCategory: cat }) })),
+        cdProducts: catProducts.map(p => {
+          const disabled = p.stock <= 0;
+          return {
+            ...productArt(p), id: p.id, name: p.name, desc: p.desc, priceLabel: fmtPrice(p.price), disabled, photoLabel: 'foto: ' + p.name,
+            cardOpacity: disabled ? '0.55' : '1',
+            badgeLabel: disabled ? 'Agotado' : (p.stock <= 5 ? ('Quedan ' + p.stock) : 'Disponible'),
+            badgeBg: disabled ? 'oklch(0.9 0.01 60)' : (p.stock <= 5 ? 'oklch(0.95 0.05 80)' : 'oklch(0.94 0.04 150)'),
+            badgeColor: disabled ? 'oklch(0.5 0.02 50)' : (p.stock <= 5 ? 'oklch(0.42 0.1 80)' : 'oklch(0.4 0.1 150)'),
+            onSelect: disabled ? undefined : () => this.openProduct(p.id),
+          };
+        }),
+        cdProductsEmpty: catProducts.length === 0,
+      };
+    }
+
+    let pdVals = {};
+    if (product) {
+      const opts = st.productOptions;
+      const unit = this.computeUnitPrice(product, opts);
+      pdVals = {
+        ...productArt(product), pdCafeteriaName: cafeteria.name, pdName: product.name, pdDesc: product.desc, pdPhotoLabel: 'foto: ' + product.name,
+        pdStockLabel: product.stock <= 5 ? ('Quedan ' + product.stock + ' unidades') : 'Disponible',
+        pdHasSize: !!product.hasSize,
+        pdSizeOptions: SIZE_OPTS.map((so, i) => ({ label: so.label, bg: i === opts.sizeIndex ? SEL_BG : UNSEL_BG, color: i === opts.sizeIndex ? SEL_COLOR : UNSEL_COLOR, border: i === opts.sizeIndex ? SEL_BORDER : UNSEL_BORDER, onSelect: () => this.setState(s => ({ productOptions: { ...s.productOptions, sizeIndex: i } })) })),
+        pdHasAzucar: !!product.hasAzucar,
+        pdAzucarOptions: AZUCAR_OPTS.map((label, i) => ({ label, bg: i === opts.azucarIndex ? SEL_BG : UNSEL_BG, color: i === opts.azucarIndex ? SEL_COLOR : UNSEL_COLOR, border: i === opts.azucarIndex ? SEL_BORDER : UNSEL_BORDER, onSelect: () => this.setState(s => ({ productOptions: { ...s.productOptions, azucarIndex: i } })) })),
+        pdHasAdiciones: (product.adiciones || []).length > 0,
+        pdAdiciones: (product.adiciones || []).map((a, i) => ({ name: a.name, priceLabel: a.price > 0 ? ('+ ' + fmtPrice(a.price)) : 'Sin costo adicional', checked: !!opts.adiciones[i], onToggle: () => this.setState(s => { const arr = [...s.productOptions.adiciones]; arr[i] = !arr[i]; return { productOptions: { ...s.productOptions, adiciones: arr } }; }) })),
+        pdQty: opts.qty, pdCanDecrease: opts.qty > 1, pdCanIncrease: opts.qty < product.stock,
+        pdDecreaseDisabled: !(opts.qty > 1), pdIncreaseDisabled: !(opts.qty < product.stock),
+        pdDecrease: () => this.setState(s => ({ productOptions: { ...s.productOptions, qty: Math.max(1, s.productOptions.qty - 1) } })),
+        pdIncrease: () => this.setState(s => ({ productOptions: { ...s.productOptions, qty: Math.min(product.stock, s.productOptions.qty + 1) } })),
+        pdTotalLabel: fmtPrice(unit * opts.qty),
+        pdAddToCart: () => this.addToCart(),
+      };
+    }
+
+    const cartLines = st.cart.map(l => ({ key: l.key, name: l.name, cafeteriaName: l.cafeteriaName, optionsSummary: l.optionsSummary, hasOptions: !!l.optionsSummary, qty: l.qty, lineTotalLabel: fmtPrice(this.cartLineTotal(l)), onIncrease: () => this.changeLineQty(l.key, 1), onDecrease: () => this.changeLineQty(l.key, -1), onRemove: () => this.removeLine(l.key) }));
+    const subtotal = this.cartSubtotal();
+    const deliveryFee = st.modalidad === 'entrega' ? DELIVERY_FEE : 0;
+    const cartTotal = subtotal + deliveryFee;
+
+    const timeSlots = this.getTimeSlots().map(s => ({ id: s.id, label: s.label, bg: s.id === st.timeSlotId ? SEL_BG : UNSEL_BG, color: s.id === st.timeSlotId ? SEL_COLOR : UNSEL_COLOR, border: s.id === st.timeSlotId ? SEL_BORDER : UNSEL_BORDER, onSelect: () => this.setState({ timeSlotId: s.id }) }));
+    const PAYMENTS = [{ id: 'nequi', label: 'Nequi' }, { id: 'tarjeta', label: 'Tarjeta débito o crédito' }, { id: 'pse', label: 'PSE' }, { id: 'efectivo', label: 'Efectivo al recoger' }];
+    const paymentMethods = PAYMENTS.map(pm => ({ id: pm.id, label: pm.label, selected: pm.id === st.paymentMethod, dotBg: pm.id === st.paymentMethod ? SEL_BG : 'transparent', border: pm.id === st.paymentMethod ? SEL_BORDER : UNSEL_BORDER, onSelect: () => this.setState({ paymentMethod: pm.id }) }));
+    const checkoutCafeteriaName = st.cart[0] ? st.cart[0].cafeteriaName : (cafeteria ? cafeteria.name : '');
+
+    const confOrder = st.orderHistory.find(o => o.id === st.currentOrderId);
+
+    let trkVals = {};
+    const trkOrder = st.orderHistory.find(o => o.id === st.currentOrderId);
+    if (trkOrder) {
+      const idx = STATUS_FLOW.indexOf(trkOrder.status);
+      trkVals = {
+        trkOrderCode: trkOrder.id, trkCafeteriaName: trkOrder.cafeteriaName,
+        trkModalidadLabel: trkOrder.modalidad === 'entrega' ? ('Entrega en ' + trkOrder.deliveryLocation) : 'Recoger en cafetería',
+        trkStatusIsCancelled: trkOrder.status === 'cancelado',
+        trkSteps: STATUS_FLOW.map((s, i) => ({ label: STATUS_LABEL[s], dotBg: (idx >= 0 && i <= idx) ? SEL_BG : 'oklch(0.89 0.018 60)', textColor: (idx >= 0 && i <= idx) ? 'oklch(0.26 0.04 45)' : 'oklch(0.62 0.025 50)', lineColor: (idx >= 0 && i < idx) ? SEL_BG : 'oklch(0.89 0.018 60)' })),
+        trkShowCancelButton: trkOrder.status === 'recibido',
+        trkShowCancelConfirm: st.showCancelConfirm,
+        trkAskCancel: () => this.setState({ showCancelConfirm: true }),
+        trkDismissCancel: () => this.setState({ showCancelConfirm: false }),
+        trkCancelOrder: () => this.cancelOrder(trkOrder.id),
+        trkShowAdvanceButton: this.props.showDemoControls !== false && idx >= 0 && idx < STATUS_FLOW.length - 1 && trkOrder.status !== 'cancelado',
+        trkAdvanceLabel: idx === 2 ? 'Marcar entregado (demo)' : 'Avanzar estado (demo)',
+        trkAdvance: () => this.advanceOrderStatusById(trkOrder.id),
+        trkEstimatedLabel: trkOrder.timeSlotLabel,
+        trkItems: trkOrder.items.map(it => ({ name: it.name, qty: it.qty, hasOptions: !!it.optionsSummary, optionsSummary: it.optionsSummary, lineTotalLabel: fmtPrice(it.unitPrice * it.qty) })),
+        trkHasDelivery: trkOrder.deliveryFee > 0, trkDeliveryLabel: fmtPrice(trkOrder.deliveryFee), trkTotalLabel: fmtPrice(trkOrder.total), trkPaymentLabel: PAY_LABEL[trkOrder.payment] || '',
+      };
+    }
+
+    const historyOrders = st.orderHistory.map(o => ({
+      key: o.id, code: o.id, cafeteriaName: o.cafeteriaName, itemsSummary: o.items.map(it => it.name + ' x' + it.qty).join(', '),
+      totalLabel: fmtPrice(o.total), statusLabel: STATUS_LABEL[o.status],
+      statusBg: o.status === 'cancelado' ? 'oklch(0.94 0.045 25)' : o.status === 'entregado' ? 'oklch(0.94 0.04 150)' : 'oklch(0.95 0.05 80)',
+      statusColor: o.status === 'cancelado' ? 'oklch(0.45 0.13 25)' : o.status === 'entregado' ? 'oklch(0.4 0.1 150)' : 'oklch(0.42 0.1 80)',
+      onOpen: () => this.setState({ currentOrderId: o.id, screen: 'tracking' }),
+      onReorder: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.reorder(o); },
+      favLabel: (st.favOrders[this.userKey()] || []).includes(o.id) ? '★ Favorito' : '☆ Favorito',
+      onFav: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleFavOrder(o.id); },
+    }));
+
+    const activeOrders = st.orderHistory.filter(o => o.cafeteriaId === MANAGED_ID && o.status !== 'entregado' && o.status !== 'cancelado').sort((a, b) => a.createdAt - b.createdAt);
+    const completedOrders = st.orderHistory.filter(o => o.cafeteriaId === MANAGED_ID && o.status === 'entregado');
+    const adminActiveOrders = activeOrders.map(o => {
+      const mins = Math.max(0, Math.round((st.clockNow - o.createdAt) / 60000));
+      const nextIdx = STATUS_FLOW.indexOf(o.status) + 1;
+      return {
+        key: o.id, code: o.id, timeLabel: o.timeSlotLabel, modalidadLabel: o.modalidad === 'entrega' ? 'Entrega' : 'Recoger',
+        itemsSummary: o.items.map(it => it.name + ' x' + it.qty).join(', '), elapsedLabel: 'hace ' + mins + ' min',
+        statusLabel: STATUS_LABEL[o.status], actionLabel: o.status === 'listo' ? 'Marcar entregado' : ('Avanzar a ' + STATUS_LABEL[STATUS_FLOW[nextIdx]]),
+        onAdvance: () => this.advanceOrderStatusById(o.id),
+      };
+    });
+
+    const managed = this.getCafeteria(MANAGED_ID);
+    const invCategories = CATS.map(cat => ({
+      name: cat,
+      products: managed.products.filter(p => p.category === cat).map(p => ({
+        id: p.id, name: p.name, priceValue: p.price, stockValue: p.stock, agotado: p.stock <= 0,
+        toggleBg: p.stock <= 0 ? 'oklch(0.66 0.19 45)' : 'oklch(0.89 0.018 60)', toggleDotLeft: p.stock <= 0 ? '16px' : '2px',
+        freshLabel: this.freshLabel(p),
+        onPriceInput: (e) => this.setProductPrice(p.id, e.target.value),
+        onStockDec: () => this.setProductStock(p.id, -1), onStockInc: () => this.setProductStock(p.id, 1),
+        onToggleAgotado: () => this.toggleAgotado(p.id),
+      })),
+    }));
+
+    const uk = this.userKey();
+    const favIds = st.favProducts[uk] || [], favOrdIds = st.favOrders[uk] || [];
+    const groups = [];
+    if (hasSearchQuery) {
+      const names = {};
+      st.cafeterias.forEach(c => c.products.forEach(p => { const k = p.name.toLowerCase(); if (k.includes(q) && !names[k]) names[k] = p.name; }));
+      Object.keys(names).forEach(k => {
+        const rows = st.cafeterias.map(c => { const p = c.products.find(x => x.name.toLowerCase() === k); return { c, p }; });
+        const avail = rows.filter(r => r.p && r.c.open && r.p.stock > 0);
+        const min = avail.length ? Math.min.apply(null, avail.map(r => r.p.price)) : 0;
+        groups.push({ key: k, title: names[k], summary: 'Disponible en ' + avail.length + ' de ' + st.cafeterias.length + ' cafeterías',
+          rows: rows.map(r => {
+            const ok = r.p && r.c.open && r.p.stock > 0;
+            const b = r.p ? this.badgeFor(r.c, r.p) : { label: 'No la vende', bg: 'oklch(0.92 0.01 60)', color: 'oklch(0.5 0.02 50)' };
+            return { key: r.c.id, cafeteriaName: r.c.name, sub: r.c.distanceMin + ' min a pie · ' + QUEUE_LABEL[r.c.queue], priceLabel: r.p ? fmtPrice(r.p.price) : '—', badgeLabel: b.label, badgeBg: b.bg, badgeColor: b.color, rowOpacity: ok ? '1' : '0.5', best: ok && avail.length > 1 && r.p.price === min, onSelect: ok ? () => this.openProductFromSearch(r.c.id, r.p.id) : undefined };
+          }) });
+      });
+    }
+    const demandAll = DEMAND.map((d, i) => { const c = this.getCafeteria(d.cid), p = this.getProduct(c, d.pid), b = this.badgeFor(c, p); return { key: 'd' + i, cid: d.cid, rank: i + 1, name: p.name, cafeteriaName: c.name, countLabel: d.count + ' pedidos hoy', barWidth: Math.round(d.count / DEMAND[0].count * 100) + '%', badgeLabel: b.label, badgeBg: b.bg, badgeColor: b.color, onSelect: (c.open && p.stock > 0) ? () => this.openProductFromSearch(d.cid, d.pid) : undefined }; });
+    const favProductItems = favIds.map(id => { const [cid, pid] = id.split('|'); const c = this.getCafeteria(cid), p = this.getProduct(c, pid); if (!p) return null; const b = this.badgeFor(c, p); return { key: id, name: p.name, cafeteriaName: c.name, priceLabel: fmtPrice(p.price), badgeLabel: b.label, badgeBg: b.bg, badgeColor: b.color, onSelect: (c.open && p.stock > 0) ? () => this.openProductFromSearch(cid, pid) : undefined, onRemove: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleFavProduct(cid, pid); } }; }).filter(Boolean);
+    const favOrderItems = st.orderHistory.filter(o => favOrdIds.includes(o.id)).map(o => ({ key: o.id, cafeteriaName: o.cafeteriaName, itemsSummary: o.items.map(it => it.name + ' x' + it.qty).join(', '), totalLabel: fmtPrice(o.total), onReorder: () => this.reorder(o), onRemove: () => this.toggleFavOrder(o.id) }));
+    const sc = st.screen === 'home' ? 'home' : st.screen === 'search' ? 'search' : st.screen === 'favorites' ? 'favorites' : 'historial';
+    const navDef = [['home', 'Inicio', 'M4 11l8-7 8 7M6 10v9h12v-9'], ['search', 'Buscar', 'M21 21l-4.3-4.3M11 18a7 7 0 100-14 7 7 0 000 14z'], ['favorites', 'Favoritos', 'M12 20s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.4-7 10-7 10z'], ['historial', 'Pedidos', 'M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3zM9 8h6M9 12h6']];
+    const navTabs = navDef.map(n => ({ key: n[0], label: n[1], icon: n[2], color: sc === n[0] ? 'oklch(0.66 0.19 45)' : 'oklch(0.48 0.03 45)', weight: sc === n[0] ? '700' : '500', onSelect: () => this.setState({ screen: n[0] }) }));
+    const curFav = cafeteria && product && favIds.includes(cafeteria.id + '|' + product.id);
+    const extra = {
+      isSearch: st.screen === 'search', isFavorites: st.screen === 'favorites', isPayment: st.screen === 'payment',
+      isRegister: st.authMode === 'register', authButtonLabel: st.authMode === 'register' && st.role === 'student' ? 'Crear cuenta' : 'Ingresar',
+      authSwitchLabel: st.authMode === 'register' ? '¿Ya tienes cuenta? Inicia sesión' : '¿Eres nuevo? Regístrate',
+      toggleAuthMode: () => this.setState(s => ({ authMode: s.authMode === 'register' ? 'login' : 'register', loginError: '' })),
+      regName: st.regName, onChangeRegName: (e) => this.setState({ regName: e.target.value }),
+      goSearch: () => this.setState({ screen: 'search' }),
+      searchGroups: groups, searchGroupsEmpty: hasSearchQuery && groups.length === 0, noSearchQuery: !hasSearchQuery,
+      demandItems: demandAll, adminDemand: demandAll.filter(d => d.cid === MANAGED_ID),
+      favProducts: favProductItems, favProductsEmpty: favProductItems.length === 0, favOrders: favOrderItems, favOrdersEmpty: favOrderItems.length === 0,
+      navTabs, pdFavFill: curFav ? 'currentColor' : 'none', pdToggleFav: () => cafeteria && product && this.toggleFavProduct(cafeteria.id, product.id),
+      payIsNequi: st.paymentMethod === 'nequi', payIsCard: st.paymentMethod === 'tarjeta', payIsPse: st.paymentMethod === 'pse',
+      payMethodLabel: PAY_LABEL[st.paymentMethod] || '', payProcessing: st.payStage === 'processing',
+      payNow: () => this.payNow(), goBackFromPayment: () => this.setState({ screen: 'checkout', payStage: 'form' }),
+    };
+    return {
+      ...extra,
+      cartCount: st.cart.reduce((s, l) => s + l.qty, 0), hasCartItems: st.cart.length > 0,
+      isLogin: st.screen === 'login', isHome: st.screen === 'home', isCafeteriaDetail: st.screen === 'cafeteria',
+      isProductDetail: st.screen === 'product', isCart: st.screen === 'cart', isCheckout: st.screen === 'checkout',
+      isConfirmation: st.screen === 'confirmation', isTracking: st.screen === 'tracking', isHistorial: st.screen === 'historial',
+      isAdminOrders: st.screen === 'adminOrders', isAdminInventory: st.screen === 'adminInventory',
+
+      toastVisible: st.toastVisible, toastText: st.toastText,
+
+      loginIsStudent: st.role === 'student', loginIsCafetero: st.role === 'cafetero',
+      setRoleStudent: () => this.setState({ role: 'student', loginError: '' }),
+      setRoleCafetero: () => this.setState({ role: 'cafetero', loginError: '' }),
+      loginEmail: st.loginEmail, onChangeEmail: (e) => this.setState({ loginEmail: e.target.value }),
+      loginPassword: st.loginPassword, onChangePassword: (e) => this.setState({ loginPassword: e.target.value }),
+      campus: st.campus, onChangeCampus: (e) => this.setState({ campus: e.target.value }),
+      cafeteroUser: st.cafeteroUser, onChangeCafeteroUser: (e) => this.setState({ cafeteroUser: e.target.value }),
+      cafeteroPassword: st.cafeteroPassword, onChangeCafeteroPassword: (e) => this.setState({ cafeteroPassword: e.target.value }),
+      loginError: st.loginError, hasLoginError: !!st.loginError,
+      handleLogin: () => this.handleLogin(),
+
+      studentName: st.studentName, campusLabel,
+      exitToLogin: () => this.setState({ screen: 'login', role: 'student', authMode: 'login', loginEmail: '', cafeteroUser: '', loginError: '' }),
+      searchQuery: st.searchQuery, onChangeSearch: (e) => this.setState({ searchQuery: e.target.value }),
+      hasSearchQuery, searchResults, searchResultsEmpty: hasSearchQuery && searchResults.length === 0,
+      cafeteriaCards,
+      goHistory: () => this.setState({ screen: 'historial' }),
+      goHome: () => this.setState({ screen: 'home' }),
+
+      ...cdVals,
+      goBackFromCafeteria: () => this.setState({ screen: 'home', searchQuery: '' }),
+      showCartBarCD: cartLines.length > 0 && st.screen === 'cafeteria',
+      cartBarLabel: cartLines.length + (cartLines.length === 1 ? ' ítem · ' : ' ítems · ') + fmtPrice(subtotal),
+      goToCart: () => this.setState({ screen: 'cart' }),
+
+      ...pdVals,
+      goBackFromProduct: () => this.setState({ screen: 'cafeteria' }),
+
+      cartEmpty: st.cart.length === 0, cartLines,
+      subtotalLabel: fmtPrice(subtotal),
+      modalidadRecoger: st.modalidad === 'recoger', modalidadEntrega: st.modalidad === 'entrega',
+      modalidadRecogerBg: st.modalidad === 'recoger' ? 'oklch(0.94 0.045 50)' : 'oklch(0.995 0.006 70)', modalidadRecogerBorder: st.modalidad === 'recoger' ? SEL_BORDER : UNSEL_BORDER,
+      modalidadEntregaBg: st.modalidad === 'entrega' ? 'oklch(0.94 0.045 50)' : 'oklch(0.995 0.006 70)', modalidadEntregaBorder: st.modalidad === 'entrega' ? SEL_BORDER : UNSEL_BORDER,
+      selectRecoger: () => this.setState({ modalidad: 'recoger' }), selectEntrega: () => this.setState({ modalidad: 'entrega' }),
+      deliveryFeeLabel: fmtPrice(DELIVERY_FEE),
+      deliveryLocation: st.deliveryLocation, onChangeDeliveryLocation: (e) => this.setState({ deliveryLocation: e.target.value }),
+      totalLabel: fmtPrice(cartTotal),
+      canContinueCheckout: st.cart.length > 0 && (st.modalidad === 'recoger' || st.deliveryLocation.trim().length > 0),
+      cartContinueDisabled: !(st.cart.length > 0 && (st.modalidad === 'recoger' || st.deliveryLocation.trim().length > 0)),
+      goCheckout: () => this.setState({ screen: 'checkout' }),
+      goBackFromCart: () => this.setState({ screen: cafeteria ? 'cafeteria' : 'home' }),
+      goHomeFromEmptyCart: () => this.setState({ screen: 'home' }),
+
+      checkoutCafeteriaName, timeSlots, paymentMethods,
+      summarySubtotalLabel: fmtPrice(subtotal), summaryHasDelivery: st.modalidad === 'entrega', summaryDeliveryLabel: fmtPrice(deliveryFee),
+      summaryTotalLabel: fmtPrice(cartTotal),
+      canConfirmOrder: !!st.timeSlotId && !!st.paymentMethod,
+      confirmOrderDisabled: !(!!st.timeSlotId && !!st.paymentMethod),
+      confirmOrder: () => this.startPayment(),
+      goBackFromCheckout: () => this.setState({ screen: 'cart' }),
+
+      confOrderCode: confOrder ? confOrder.id : '', confCafeteriaName: confOrder ? confOrder.cafeteriaName : '',
+      confCafeteriaLocation: confOrder ? confOrder.cafeteriaLocation : '', confTimeLabel: confOrder ? confOrder.timeSlotLabel : '',
+      confModalidadLabel: confOrder ? (confOrder.modalidad === 'entrega' ? ('Entrega en ' + confOrder.deliveryLocation) : 'Recoger en cafetería') : '',
+      goToTracking: () => this.setState({ screen: 'tracking' }),
+      goHomeFromConfirmation: () => this.setState({ screen: 'home' }),
+
+      ...trkVals,
+      goBackFromTracking: () => this.setState({ screen: st.role === 'cafetero' ? 'adminOrders' : 'home' }),
+
+      historyEmpty: historyOrders.length === 0, historyOrders,
+      goHomeFromHistoryEmpty: () => this.setState({ screen: 'home' }),
+
+      adminActiveOrders, adminActiveEmpty: adminActiveOrders.length === 0,
+      adminCompletedOrders: completedOrders.map(o => ({ key: o.id, code: o.id, itemsSummary: o.items.map(it => it.name + ' x' + it.qty).join(', '), totalLabel: fmtPrice(o.total) })),
+      adminHasCompleted: completedOrders.length > 0,
+      goAdminOrders: () => this.setState({ screen: 'adminOrders' }), goAdminInventory: () => this.setState({ screen: 'adminInventory' }),
+
+      invCategories,
+      showDemoControls: this.props.showDemoControls !== false,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
