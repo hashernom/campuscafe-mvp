@@ -23,8 +23,8 @@ div[style*="overflow: auto"]>*,div[style*="overflow:auto"]>*{flex-shrink:0}
 input:focus,select:focus,textarea:focus{outline:2px solid oklch(0.66 0.19 45 / 0.4)}
 </style>
 </helmet>
-<div style="min-height:900px;width:100%;display:flex;align-items:center;justify-content:center;padding:36px 16px;background:oklch(0.93 0.01 60);box-sizing:border-box">
-<x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" width="390" height="844" hint-size="390,844">
+<div style="height:100vh;height:100dvh;width:100%;display:flex;justify-content:center;background:oklch(0.93 0.01 60);box-sizing:border-box">
+<div style="height:100%;width:100%;max-width:480px;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,0.08)">
 <div style="position:relative;height:100%;width:100%;display:flex;flex-direction:column;background:oklch(0.97 0.014 70);overflow:hidden;color:oklch(0.26 0.04 45)">
 
 <sc-if value="{{isLogin}}" hint-placeholder-val="{{true}}">
@@ -782,7 +782,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid oklch(0.66 0.19 45 / 0
 </sc-if>
 
 </div>
-</x-import>
+</div>
 </div>
 
 </x-dc>
