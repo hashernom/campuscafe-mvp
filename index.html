@@ -53,9 +53,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid oklch(0.66 0.19 45 / 0
 
     <sc-if value="{{loginIsStudent}}" hint-placeholder-val="{{true}}">
       <div style="flex-shrink:0;display:flex;flex-direction:column;gap:12px">
-        <sc-if value="{{isRegister}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Nombre</label><input type="text" value="{{regName}}" onChange="{{onChangeRegName}}" placeholder="Tu nombre" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /></div></sc-if>
+        <sc-if value="{{isRegister}}" hint-placeholder-val="{{false}}"><div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px"><label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Nombre (opcional)</label><input type="text" value="{{regName}}" onChange="{{onChangeRegName}}" placeholder="Tu nombre" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" /></div></sc-if>
         <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
-          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Correo institucional</label>
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Correo institucional (opcional)</label>
           <input type="email" value="{{loginEmail}}" onChange="{{onChangeEmail}}" placeholder="tu.nombre@correo.udes.edu.co" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
         </div>
         <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
@@ -73,7 +73,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid oklch(0.66 0.19 45 / 0
     <sc-if value="{{loginIsCafetero}}" hint-placeholder-val="{{false}}">
       <div style="flex-shrink:0;display:flex;flex-direction:column;gap:12px">
         <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
-          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Usuario de cafetería</label>
+          <label style="font-size:12px;font-weight:600;color:oklch(0.48 0.03 45)">Usuario de cafetería (opcional)</label>
           <input type="text" value="{{cafeteroUser}}" onChange="{{onChangeCafeteroUser}}" placeholder="cafeteria.bloque8" style="padding:13px 14px;border-radius:12px;border:1.5px solid oklch(0.89 0.018 60);font-size:14px;background:oklch(0.995 0.006 70);color:oklch(0.26 0.04 45)" />
         </div>
         <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px">
@@ -964,15 +964,14 @@ class Component extends DCLogic {
     const st = this.state;
     if (st.role === 'student') {
       const email = st.loginEmail.trim().toLowerCase();
-      if (!email.endsWith('@correo.udes.edu.co')) { this.setState({ loginError: 'Usa tu correo institucional @correo.udes.edu.co' }); return; }
+      const key = email || 'demo';
       const reg = st.authMode === 'register';
-      if (reg && !st.regName.trim()) { this.setState({ loginError: 'Ingresa tu nombre' }); return; }
-      const local = email.split('@')[0].split('.')[0];
-      const name = reg ? st.regName.trim().split(' ')[0] : (st.names[email] || (local.charAt(0).toUpperCase() + local.slice(1)));
-      this.setState(s => ({ loginError: '', screen: 'home', studentName: name, names: { ...s.names, [email]: name } }));
+      const local = email ? email.split('@')[0].split('.')[0] : '';
+      const typed = reg ? st.regName.trim().split(' ')[0] : '';
+      const name = typed || st.names[key] || (local ? local.charAt(0).toUpperCase() + local.slice(1) : 'Camila');
+      this.setState(s => ({ loginError: '', screen: 'home', studentName: name, names: { ...s.names, [key]: name } }));
       if (reg) this.showToast('Cuenta creada');
     } else {
-      if (!st.cafeteroUser.trim()) { this.setState({ loginError: 'Ingresa tu usuario de cafetería' }); return; }
       this.setState({ loginError: '', screen: 'adminOrders' });
     }
   }
